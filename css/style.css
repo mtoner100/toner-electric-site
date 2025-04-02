@@ -329,13 +329,43 @@
     list-style-type: disc;
     margin-left: 1.5rem;
   }
+/* Wrapper to force full width centering outside .container limits */
+.services-images-wrapper {
+  width: 100vw;
+  background-color: #f9f9f9; /* Optional background color */
+  padding: 2rem 0;
+}
+
+.services-images {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.services-images img {
+  width: 300px;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
   .services-images {
-    flex: 1 1 100%;
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-    justify-content: center;
+    padding: 0 1rem;
   }
+
+  .services-images img {
+    width: 80%;
+    max-width: 250px;
+    margin-bottom: 1rem;
+  }
+}
   
   /* 6. CALL TO ACTION SECTION */
   .cta-section {
@@ -417,12 +447,6 @@
     .nav-menu {
       flex-direction: column;
       margin-top: 1rem;
-    }
-    .about-services-section {
-      flex-direction: column;
-    }
-    .footer-flex {
-      flex-direction: column;
     }
   }
     /* ===== Services Grid Styles ===== */
@@ -581,12 +605,7 @@
     z-index: 10000;
     border-radius: 3px;
   }
-/* === Responsive: Hide on small screens === */
-@media (max-width: 768px) {
-  .facebook-sidebar {
-    display: none;
-  }
-}
+
 .full-width-service-section {
   width: 100vw;
   margin: 0;
@@ -727,9 +746,6 @@
   .staff-grid-four .staff-member {
     max-width: 100%;
   }
-  .footer-flex {
-    flex-direction: column;
-  }
 }
 @media (max-width: 768px) {
   .nav-flex {
@@ -763,8 +779,314 @@
   }
 
   .main-nav {
-    padding: 0.5rem 0;
+    display: none !important;
   }
 }
+@media (max-width: 768px) {
+  .about-services-section {
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .about,
+  .services {
+    margin-bottom: 0.5rem;  /* Less space between About and Services */
+  }
+
+  .about p,
+  .services ul {
+    margin-bottom: 0.5rem;
+  }
+
+  .reviews-section {
+    padding: 1rem 0;
+    margin-top: 0;
+  }
+
+  .reviews-section h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  #reviews-container {
+    margin-top: 0;
+  }
+}
+@media (max-width: 768px) {
+  .history-content {
+    flex-direction: column;
+  }
+
+  .history-intro,
+  .history-images {
+    width: 100%;
+  }
+
+  .history-images {
+    margin-top: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .history-images img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .history-images figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #555;
+  }
+}
+@media (max-width: 768px) {
+  .footer-flex {
+    gap: 1rem; /* Reduce space between Contact Info and Map */
+  }
+
+  .footer-contact,
+  .footer-map {
+    margin-bottom: 0; /* Remove any extra spacing if present */
+    padding-bottom: 0;
+  }
+
+  .footer-contact p,
+  .footer-map iframe {
+    margin-bottom: 0.5rem; /* Tighter spacing inside sections */
+  }
+}
+@media (max-width: 768px) {
+  .footer-map {
+    margin-top: 0;
+  }
+}
+/* Default state: hide the mobile banner */
+.facebook-mobile-banner {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #1877f2;
+  color: white;
+  padding: 0.75rem 1rem;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10000;
+}
+
+.facebook-mobile-banner span {
+  font-weight: bold;
+}
+
+.facebook-mobile-banner .fb-button {
+  background: #fff;
+  color: #1877f2;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.facebook-mobile-banner .close-fb-banner {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* Only show mobile banner and hide sidebar on small screens */
+@media (max-width: 768px) {
+  .facebook-mobile-banner {
+    display: flex;
+  }
+
+  .facebook-sidebar {
+    display: none !important;
+  }
+}
+
+/* On desktop, force-hide the mobile banner */
+@media (min-width: 769px) {
+  .facebook-mobile-banner {
+    display: none !important;
+  }
+
+  .facebook-sidebar {
+    display: block;
+  }
+}
+/* Hamburger Icon */
+.mobile-menu-icon {
+  padding: 1rem;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1001;
+  cursor: pointer;
+}
+
+
+/* Sidebar styles */
+.mobile-sidebar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  height: 100%;
+  width: 80%;
+  max-width: 300px;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  transition: left 0.3s ease;
+  z-index: 9998;
+  padding: 2rem 1rem;
+}
+
+.mobile-sidebar.open {
+  left: 0;
+}
+
+.mobile-sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-sidebar {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-nav-menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+.mobile-nav-menu li {
+  margin-bottom: 1rem;
+}
+
+.mobile-nav-menu li a {
+  font-size: 1.2rem;
+  color: #333;
+  text-decoration: none;
+}
+/* Default: hide the hamburger menu on large screens */
+.mobile-menu-icon {
+  display: none;
+}
+
+
+
+/* ====== MOBILE HEADER STYLE UPDATE ====== */
+
+/* Hide mobile layout on desktop */
+.mobile-header-icons {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-header-icons {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px 1rem;
+    background-color: #000;
+  }
+
+  .mobile-header-icons .logo {
+    z-index: 2;
+  }
+
+  .mobile-header-icons .logo img {
+    max-width: 140px;
+    height: auto;
+  }
+  .mobile-call-icon img {
+    width: 100px;         /* or whatever size you want */
+    height: auto;
+    display: block;   /* optional: makes black icons white on dark backgrounds */
+  }
+
+  .mobile-call-icon {
+    position: absolute;
+    left: 1rem;
+    font-size: 1.6rem;
+    text-decoration: none;
+    z-index: 2;
+  }
+
+  .hamburger-icon {
+    position: absolute;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 50px;
+    height: 90px;
+    background-color: black;
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .hamburger-icon span {
+    background-color: white;
+    height: 10px;
+    width: 100%;
+    display: block;
+    border-radius: 2px;
+  }
+}
+
+
+@media (min-width: 769px) {
+  .hamburger-icon {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4rem; /* ⬅️ This creates extra spacing between the logo, center text, and contact info */
+    width: 100%;
+  }
+
+  .main-nav {
+    display: block;
+  }
+}
+
+/* Keep legacy styles */
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-icons {
+  display: none;
+}
+@media (max-width: 768px) {
+  .desktop-header-content .logo {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .desktop-header-content {
+    display: none !important;
+  }
+}
+
 
   

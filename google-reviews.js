@@ -1,7 +1,7 @@
 const reviewsContainer = document.getElementById("reviews-container");
 
 async function fetchReviews() {
-    const url = "http://localhost:3000/reviews"; // Ensure your backend server is running
+    const url = "https://toner-electric-site.onrender.com/reviews"; // Ensure your backend server is running
 
     try {
         const response = await fetch(url);

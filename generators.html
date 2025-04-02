@@ -8,31 +8,61 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
+<!-- Sidebar Navigation -->
+<div class="mobile-sidebar" id="mobile-sidebar">
+  <div class="mobile-sidebar-header">
+    <button class="close-sidebar" id="close-sidebar">&times;</button>
+  </div>
+  <ul class="mobile-nav-menu">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About Us</a></li>
+    <li><a href="electrical_services.html">Electrical</a></li>
+    <li><a href="generators.html">Generators</a></li>
+    <li><a href="fire_alarms.html">Fire Alarms</a></li>
+  </ul>
+</div>
 <!-- ===== 1. HEADER / TOP INFO BAR ===== -->
 <header class="top-bar">
-    <div class="container">
-        <div class="logo">
-            <!-- Replace with your actual logo file -->
-            <img src="images/logo_clear.jpeg" alt="Toner Electric Company Logo" />
-        </div>
-        <div class="top-bar-left">
-            <p>Serving our customers <br>since 1952</p>
-        </div>
-        <div class="top-bar-right">
-            <span class="phone-number">Call Us: <strong>(401) 847-0993</strong></span>
-            <div class="social-section">
-                <p>Find us on:</p>
-                <a href="https://www.facebook.com/TonerElectric/" target="_blank" class="social-icon" aria-label="Facebook">
-                    <img src="images/facebook.png" alt="Facebook" />
-                </a>
-            </div>
-            <!-- Address Section -->
-            <div class="company-address">
-                <p>305 Oliphant Ln, Unit 10</p>
-                <p>Middletown, RI 02842</p>
-            </div>
-        </div>
+  <div class="container header-flex">
+    <!-- Mobile-only header bar -->
+    <div class="mobile-header-icons">
+      <a href="tel:4018470993" class="mobile-call-icon" aria-label="Call Toner Electric">
+        <img src="images/iphone_clear.png" alt="Call Toner Electric" />
+      </a>
+      <div class="logo">
+        <img src="images/logo_clear.jpeg" alt="Toner Electric Company Logo" />
+      </div>
+      <button class="hamburger-icon" id="mobile-menu-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
+
+    <!-- Desktop layout -->
+    <div class="desktop-header-content">
+      <div class="logo">
+        <img src="images/logo_clear.jpeg" alt="Toner Electric Company Logo" />
+      </div>
+      <div class="top-bar-left">
+        <p>Serving our customers <br>since 1952</p>
+      </div>
+      <div class="top-bar-right">
+        <span class="phone-number">Call Us: <strong>(401) 847-0993</strong></span>
+        <div class="social-section">
+          <p>Find us on:</p>
+          <a href="https://www.facebook.com/TonerElectric/" target="_blank" class="social-icon" aria-label="Facebook">
+            <img src="images/facebook.png" alt="Facebook" />
+          </a>
+        </div>
+        <div class="company-address">
+          <p>305 Oliphant Ln, Unit 10</p>
+          <p>Middletown, RI 02842</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
 
   <!-- ===== NAVIGATION BAR (identical to index.html) ===== -->
@@ -142,5 +172,27 @@
       </div>
     </div>
   </footer>
+  <script>
+    // For the mobile nav menu
+    const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+    const mobileSidebar = document.getElementById('mobile-sidebar');
+    const navCloseBtn = document.getElementById('close-sidebar');
+  
+    mobileMenuIcon.addEventListener('click', () => {
+      mobileSidebar.classList.add('open');
+    });
+  
+    navCloseBtn.addEventListener('click', () => {
+      mobileSidebar.classList.remove('open');
+    });
+  
+    // Optional: close menu if user clicks outside of sidebar
+    document.addEventListener('click', (e) => {
+      if (!mobileSidebar.contains(e.target) && !mobileMenuIcon.contains(e.target)) {
+        mobileSidebar.classList.remove('open');
+      }
+    });
+  </script>
+
 </body>
 </html>
