@@ -1,0 +1,688 @@
+/* 1. Global Resets & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    color: #333;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* 2. HEADER / TOP BAR */
+  .top-bar {
+    background-color: #000; /* or your brand color */
+    color: #fff;
+    padding: 0.5rem 0;
+    padding-top: 2rem;    /* Adds spacing at the top */
+    padding-bottom: 2rem;
+  }
+  .top-bar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .top-bar-left p {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  .top-bar-right {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-end;  /* Align text and icon to the right */
+  }
+  .top-bar-right .phone-number {
+    margin-right: 1rem;
+    font-weight: bold;
+  }
+  .phone-number {
+    font-size: 24px; /* Increase the text size */
+    font-weight: normal; /* Keep "Call Us:" normal weight */
+  }
+
+  .phone-number strong {
+    font-weight: bold; /* Make only the phone number bold */
+  }   
+  .social-section {
+    display: flex;
+    align-items: center; /* Align text and icon in the same line */
+    margin-top: 5px; /* Add slight spacing below the phone number */
+  }
+
+  .social-section p {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+      margin-right: 5px; /* Space between text and icon */
+  }
+
+  .social-icon img {
+      width: 24px; /* Adjust the icon size */
+      height: 24px;
+  }
+    /* Address Styling */
+  .company-address {
+    font-size: 18px;
+    text-align: right; /* Align text to the right */
+    margin-top: 5px; /* Space below the social section */
+  }
+  /* SubHeader Grey title banner */
+
+  .title-banner {
+    background-color: #F2F2F2; /* or a light gray: #f0f0f0 */
+    text-align: left;
+    padding: 2rem 0;        /* adds vertical space above/below the heading */
+    border-bottom: 1px solid #ccc; /* optional separator line */
+  }
+  
+  .title-banner h1 {
+    margin: 0;        /* remove default heading margins */
+    font-size: 2rem;  /* enlarge the text */
+    color: #000;      /* black text */
+    font-weight: bold;
+  }
+  
+  /* Formats in the about page */
+  .history-intro p {
+    margin-bottom: 1rem; 
+    margin-top: 1rem;
+    flex: 2; /* or 2rem, or however much space you like */
+  }
+  .history-images {
+    flex: none;                  /* 1 part */
+    display: flex;            /* Another flex container */
+    flex-direction: column;   /* Stack images vertically */
+    gap: 1rem;
+    padding: 1rem 0;                 /* Space between images */
+  }
+
+  .history-content {
+    display: flex;            /* Use flexbox for side-by-side layout */
+    gap: 2rem;                /* Space between text and images */
+    align-items: flex-start;  /* Align top edges of each column */
+  }
+
+  /* Founder Banner Section */
+  .founder-banner {
+    background-color: #000; /* Black background */
+    color: #fff; /* White text */
+    padding: 3rem 0; /* Top and bottom padding */
+  }
+
+  .founder-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* Space between image and text */
+  }
+
+  /* Founder Image */
+  .founder-image img {
+    width: 150px; /* Adjust size as needed */
+    border-radius: 5px;
+  }
+
+  /* Founder Text */
+  .founder-text {
+    flex: 1; /* Takes up remaining space */
+  }
+
+  .founder-text h2 {
+    color: #FFD700; /* Gold/yellow color */
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .founder-text p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+    /* Staff Grid: Display in Three Columns */
+  .staff-grid {
+    display: flex;
+    justify-content: space-between; /* Ensures equal spacing */
+    gap: 2rem; /* Space between columns */
+    flex-wrap: wrap;
+    padding: 2rem 0; /* Allows stacking on small screens */
+  }
+
+  /* Individual Staff Member */
+  .staff-member {
+    flex: 1; /* Makes each item take equal space */
+    max-width: 30%; /* Ensures three columns */
+    text-align: center; /* Centers text and images */
+  }
+
+  /* Staff Images */
+  .staff-member img {
+    width: 150px; /* Adjust as needed */
+    height: auto;
+    border-radius: 5px; /* Optional: Adds rounded corners */
+  }
+
+  /* Responsive: Stack Items on Smaller Screens */
+  @media (max-width: 900px) {
+    .staff-grid {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;
+        padding: 2rem 0;
+    }
+
+    .staff-member {
+        max-width: 100%; /* Make them full-width on small screens */
+    }
+  }
+    /* Staff Grid: Four Columns */
+  .staff-grid-four {
+    display: flex;
+    background-color: #000;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 3rem 0; /* Adds spacing at the top and bottom */
+  }
+
+  /* Individual Staff Member */
+  .staff-grid-four .staff-member {
+    flex: 1 1 22%; /* Ensures four columns */
+    max-width: 22%;
+    text-align: center;
+    color: white; /* Ensures text is visible on a dark background */
+  }
+
+  /* Staff Images */
+  .staff-grid-four .staff-member img {
+    width: 150px; /* Adjust as needed */
+    height: auto;
+    border-radius: 5px;
+  }
+
+  /* Title Styling */
+  .staff-grid-four .staff-member h4 {
+    color: #FFD700; /* Gold text color */
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+
+  /* Responsive Design for Medium Screens (Two Columns) */
+  @media (max-width: 1024px) {
+    .staff-grid-four .staff-member {
+        flex: 1 1 45%; /* Two columns */
+        max-width: 45%;
+    }
+  }
+
+  /* Responsive Design for Small Screens (Single Column) */
+  @media (max-width: 768px) {
+    .staff-grid-four {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .staff-grid-four .staff-member {
+        max-width: 100%; /* Full width on mobile */
+    }
+  }
+  
+
+  /* 3. NAVIGATION */
+  .main-nav {
+    background-color: #FFFF00; /* or your brand color */
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    padding-top: 1rem;    /* Adds spacing at the top */
+    padding-bottom: 1rem;
+  }
+  .nav-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo img {
+    width: 250px;  /* Choose any size that fits your layout */
+    height: auto;
+  }
+  .nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+  }
+  .nav-menu li a {
+    padding: 0.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  .nav-menu li a:hover {
+    color: #f5b400; /* highlight color */
+  }
+  
+  /* 4. HERO SECTION */
+  .hero-section {
+    background: url('../images/bridge_lightning.png') no-repeat center center/cover;
+    position: relative;
+    min-height: 400px;
+    color: #fff;
+  }
+  .hero-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+  }
+  .hero-content {
+    text-align: center;
+  }
+  .hero-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .btn-hero {
+    background-color: #f5b400;
+    color: #000;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  .btn-hero:hover {
+    background-color: #ffc933;
+  }
+  
+  /* 5. ABOUT & SERVICES SECTION */
+  .about-services-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 2rem auto;
+  }
+  .about, .services {
+    flex: 1 1 300px;
+  }
+  .about h2, .services h2 {
+    margin-bottom: 1rem;
+  }
+  .about p {
+    line-height: 1.6;
+  }
+  .services ul {
+    margin-top: 1rem;
+    list-style-type: disc;
+    margin-left: 1.5rem;
+  }
+  .services-images {
+    flex: 1 1 100%;
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center;
+  }
+  
+  /* 6. CALL TO ACTION SECTION */
+  .cta-section {
+    background-color: #333;
+    color: #fff;
+    padding: 2rem 0;
+    text-align: center;
+  }
+  .cta-section h2 {
+    margin-bottom: 1rem;
+  }
+  .cta-buttons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background-color: #f5b400;
+    color: #000;
+  }
+  .btn-primary:hover {
+    background-color: #ffc933;
+  }
+  .btn-secondary {
+    background-color: #555;
+  }
+  .btn-secondary:hover {
+    background-color: #777;
+  }
+  
+  /* 7. FOOTER SECTION */
+  .footer-section {
+    background-color: #222;
+    color: #ccc;
+    padding: 2rem 0;
+  }
+  .footer-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  .footer-contact, .footer-map {
+    flex: 1 1 300px;
+  }
+  .footer-contact h3, .footer-map h3 {
+    margin-bottom: 1rem;
+  }
+  .footer-bottom {
+    border-top: 1px solid #555;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  .footer-bottom p {
+    margin-bottom: 0.5rem;
+  }
+  .footer-bottom a {
+    color: #ccc;
+  }
+  .footer-bottom a:hover {
+    color: #fff;
+  }
+  
+  /* RESPONSIVE MEDIA QUERIES */
+  @media (max-width: 768px) {
+    .nav-flex {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .nav-menu {
+      flex-direction: column;
+      margin-top: 1rem;
+    }
+    .about-services-section {
+      flex-direction: column;
+    }
+    .footer-flex {
+      flex-direction: column;
+    }
+  }
+    /* ===== Services Grid Styles ===== */
+  .services-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    padding: 4rem 0;
+  }
+
+  /* Individual Service Column */
+  .service-column {
+    flex: 1 1 30%; /* Three columns */
+    max-width: 30%;
+    text-align: left;
+    background-color: #f5f5f5; /* Light gray background */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Service Images */
+  .service-column img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+
+  /* Service Headings */
+  .service-column h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    color: #333;
+  }
+
+  .service-column h4 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 1.5rem;
+    color: #444;
+  }
+
+  /* Unordered List */
+  .service-column ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Questions & Answers */
+  .qa-section {
+    margin-top: 1.5rem;
+  }
+  .qa-section ul {
+    list-style-type: disc; /* Default bullet style */
+    padding-left: 1.5rem; /* Indent bullets */
+    margin-top: 0.5rem;
+  }
+  .qa-section ul li {
+    margin-bottom: 0.5rem; /* Adds space between bullets */
+  }
+
+  .qa-section h5 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    color: #222;
+  }
+
+  .qa-section p {
+    font-size: 1rem;
+    color: #555;
+  }
+
+  /* ===== Responsive Design ===== */
+  @media (max-width: 1024px) {
+    .service-column {
+        flex: 1 1 45%; /* Two columns on medium screens */
+        max-width: 45%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .services-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-column {
+        max-width: 90%; /* Full width on mobile */
+    }
+  }
+    /* Google Reviews Section */
+  .reviews-section {
+    background-color: #f5f5f5;
+    padding: 3rem 0;
+    text-align: center;
+  }
+
+  .reviews-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+
+  /* Reviews Container */
+  #reviews-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  /* Individual Review */
+  .review {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: left;
+  }
+
+  .review-header {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .facebook-sidebar {
+    position: fixed;
+    top: 100px;
+    right: 0;
+    z-index: 9999;
+    background: white;
+    border-left: 2px solid #ccc;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .facebook-sidebar iframe {
+    display: block;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: #000;
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
+    padding: 2px 8px;
+    cursor: pointer;
+    z-index: 10000;
+    border-radius: 3px;
+  }
+/* === Responsive: Hide on small screens === */
+@media (max-width: 768px) {
+  .facebook-sidebar {
+    display: none;
+  }
+}
+.full-width-service-section {
+  width: 100vw;
+  margin: 0;
+  padding: 2rem;
+  background-color: #f9f9f9; /* optional: for contrast */
+}
+
+.full-width-service-section .service-column {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.black-service-section {
+  background-color: #000;
+  color: #fff;
+  padding: 0.75rem 1.5rem 1.5rem 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.black-service-section h4 {
+  color: #FFFF00;
+  margin-top: 0;
+}
+
+.black-service-section ul {
+  padding-left: 1.5rem;
+}
+
+.black-service-section li {
+  margin-bottom: 0.5rem;
+}
+.image-with-text {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.image-with-text .text-content {
+  flex: 1 1 60%;
+}
+
+.image-with-text .image-content {
+  flex: 1 1 35%;
+}
+
+.image-with-text .image-content img {
+  width: 100%;
+  max-width: 300px; /* You can adjust this value */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+.black-service-section-two-column {
+  background-color: #000;
+  color: #fff;
+  padding: 0.75rem 1.5rem 1.5rem 1.5rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.black-service-section-two-column h4 {
+  color: #FFFF00;
+  margin-top: 0;
+}
+
+.black-service-section-two-column ul {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+  column-gap: 2rem;
+  padding-left: 1.5rem;
+}
+
+.black-service-section-two-column li {
+  margin-bottom: 0.5rem;
+  break-inside: avoid; /* prevents items from breaking across columns */
+}
+
+/* Optional: Make it stack into 1 column on smaller screens */
+@media (max-width: 768px) {
+  .black-service-section-two-column ul {
+    columns: 1;
+  }
+}
+.generator-banner-image {
+  text-align: center;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  background-color: #f9f9f9; /* match your section background or use white */
+}
+
+.generator-banner-image img {
+  max-width: 500px;  /* adjust to the size you want */
+  width: 100%;
+  height: auto;
+}
+  
