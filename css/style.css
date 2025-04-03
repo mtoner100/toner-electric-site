@@ -562,6 +562,7 @@
     gap: 1.5rem;
   }
 
+
   /* Individual Review */
   .review {
     background: white;
@@ -1087,6 +1088,61 @@
     display: none !important;
   }
 }
+/* === Mobile Styles === */
+@media (max-width: 768px) {
+  .founder-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
+  .founder-image img {
+    max-width: 100%;
+  }
+
+  .founder-text {
+    padding: 0 1rem;
+  }
+}
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .mobile-toggle-btn {
+    display: block;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #0055aa;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Hide reviews on mobile until toggled */
+  #reviews-container.reviews-hidden {
+    display: none;
+  }
+}
+
+/* Hide toggle button on desktop */
+@media (min-width: 769px) {
+  .mobile-toggle-btn {
+    display: none;
+  }
+}
+.mobile-toggle-wrapper {
+  text-align: center;
+}
+
+.mobile-toggle-btn {
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #1a56db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
   

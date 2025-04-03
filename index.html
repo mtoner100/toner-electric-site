@@ -50,7 +50,7 @@
     <!-- Mobile-only header bar -->
     <div class="mobile-header-icons">
       <a href="tel:4018470993" class="mobile-call-icon" aria-label="Call Toner Electric">
-        <img src="images/iphone_clear.png" alt="Call Toner Electric" />
+        <img src="images/white_phone_icon.png" alt="Call Toner Electric" />
       </a>
       <div class="logo">
         <img src="images/logo_clear.jpeg" alt="Toner Electric Company Logo" />
@@ -130,26 +130,41 @@
         <li>Generator Sales &amp; Service (Generac Factory Trained)</li>
         <li>Fire Alarm Installations &amp; Testing</li>
         <li>Electrical Troubleshooting &amp; Repair</li>
-        <li>Lighting Design &amp; Upgrade</li>
       </ul>
     </div>
 
     <section id="google-reviews" class="reviews-section">
-        <div class="container">
-            <h2>
-                <a href="https://www.google.com/maps/place/Toner+Electric+Company/@41.5196,-71.2805,15z/data=!4m6!3m5!1s0x89e5a94e65452e05:0x8530d0d5a466691!8m2!3d41.5196!4d-71.2805!16s%2Fg%2F11b6t7jvs4?entry=ttu" 
-                   target="_blank" rel="noopener noreferrer">
-                   Customer Reviews
-                </a>
-            </h2>
-            <div id="reviews-container">
-                <!-- Reviews will be inserted here dynamically -->
-            </div>
+      <div class="container">
+        <h2>
+          <a href="https://www.google.com/maps/place/Toner+Electric+Company/@41.5196,-71.2805,15z/data=!4m6!3m5!1s0x89e5a94e65452e05:0x8530d0d5a466691!8m2!3d41.5196!4d-71.2805!16s%2Fg%2F11b6t7jvs4?entry=ttu" 
+             target="_blank" rel="noopener noreferrer">
+             Customer Reviews
+          </a>
+        </h2>
+    
+        <!-- Mobile toggle button -->
+        <div class="mobile-toggle-wrapper">
+          <button id="toggle-reviews-btn" class="mobile-toggle-btn">Show Reviews</button>
         </div>
+    
+        <div id="reviews-container" class="reviews-hidden">
+          <!-- Reviews will be inserted here dynamically -->
+        </div>
+      </div>
     </section>
     
     <!-- Link to our JavaScript file -->
     <script src="google-reviews.js"></script>
+
+    <script>
+      const toggleBtn = document.getElementById("toggle-reviews-btn");
+      const reviews = document.getElementById("reviews-container");
+    
+      toggleBtn?.addEventListener("click", () => {
+        reviews.classList.toggle("reviews-hidden");
+        toggleBtn.textContent = reviews.classList.contains("reviews-hidden") ? "Show Reviews" : "Hide Reviews";
+      });
+    </script>
 
     <!-- Optional images or service pictures -->
     <div class="services-images-wrapper">
