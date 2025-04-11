@@ -169,12 +169,11 @@
     max-width: 30%; /* Ensures three columns */
     text-align: center; /* Centers text and images */
   }
-
-  /* Staff Images */
   .staff-member img {
-    width: 150px; /* Adjust as needed */
-    height: auto;
-    border-radius: 5px; /* Optional: Adds rounded corners */
+    width: 200px;     /* or whatever size you prefer */
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px; /* optional for rounded corners */
   }
 
   /* Responsive: Stack Items on Smaller Screens */
@@ -209,9 +208,12 @@
 
   /* Staff Images */
   .staff-grid-four .staff-member img {
-    width: 150px; /* Adjust as needed */
-    height: auto;
-    border-radius: 5px;
+    width: 200px;          /* Fixed width */
+    height: 200px;         /* Fixed height */
+    object-fit: cover;     /* Crops without distortion */
+    border-radius: 8px;    /* Optional: adds rounded corners */
+    display: block;
+    margin: 0 auto;        /* Centers the image in its container */
   }
 
   /* Title Styling */
