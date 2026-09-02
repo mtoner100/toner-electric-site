@@ -14,6 +14,34 @@
     container.appendChild(p);
   }
 
+  /* Placeholders roughly the size of real reviews. Without these the grid is
+     almost empty while the request is in flight, and everything below it jumps
+     up the page - which broke "Request an Estimate" links from other pages. */
+  function showSkeletons(n) {
+    container.replaceChildren();
+    for (let i = 0; i < n; i++) {
+      const card = document.createElement("div");
+      card.className = "review review--skeleton";
+      card.setAttribute("aria-hidden", "true");
+      for (let j = 0; j < 5; j++) card.appendChild(document.createElement("span"));
+      container.appendChild(card);
+    }
+  }
+
+  /* If the visitor arrived on a #hash, correct their position once the real
+     reviews have replaced the placeholders - unless they've started scrolling
+     themselves, in which case leave them alone. */
+  let userScrolled = false;
+  ["wheel", "touchmove", "keydown"].forEach(evt =>
+    window.addEventListener(evt, () => { userScrolled = true; }, { passive: true, once: true })
+  );
+
+  function restoreHashPosition() {
+    if (userScrolled || !location.hash) return;
+    const target = document.querySelector(location.hash);
+    if (target) target.scrollIntoView();
+  }
+
   function render(reviews) {
     container.replaceChildren();
 
@@ -45,7 +73,7 @@
   }
 
   async function load() {
-    status("Loading reviews…");
+    showSkeletons(5);
 
     // The reviews server sleeps when idle and can take a while to wake.
     const controller = new AbortController();
@@ -60,12 +88,14 @@
         render(data.reviews);
         const score = document.getElementById("review-score");
         if (score && data.rating) score.textContent = data.rating;
+        restoreHashPosition();
       } else {
         status("No reviews to show right now.");
       }
     } catch (error) {
       console.error("Error fetching Google reviews:", error);
       status("Reviews couldn't be loaded. See them on our Google listing.");
+      restoreHashPosition();
     } finally {
       clearTimeout(timer);
     }

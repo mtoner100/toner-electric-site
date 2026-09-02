@@ -142,6 +142,9 @@ strong { font-weight: 600; color: var(--ink); }
   padding-inline: var(--s-5);
 }
 
+/* Anchor targets sit under the sticky header without this */
+[id] { scroll-margin-top: calc(var(--header-h) + var(--s-4)); }
+
 .section { padding-block: var(--s-9); }
 .section--tight { padding-block: var(--s-7); }
 .section--tint  { background: var(--paper-2); }
@@ -230,7 +233,7 @@ strong { font-weight: 600; color: var(--ink); }
   gap: var(--s-5); min-height: var(--header-h);
 }
 .site-logo { display: flex; align-items: center; flex-shrink: 0; }
-.site-logo img { width: 168px; height: auto; }
+.site-logo img { width: auto; height: auto; max-height: 50px; }
 
 .site-nav ul {
   display: flex; align-items: center; gap: var(--s-1);
@@ -466,7 +469,21 @@ a.card:hover .card__more { gap: var(--s-3); }
   font-family: var(--font-display); font-weight: 700; font-size: var(--fs-sm); color: var(--ink);
 }
 .review__author span { display: block; font-weight: 500; color: var(--ink-3); font-size: var(--fs-xs); }
-.reviews-status { color: var(--ink-3); font-size: var(--fs-sm); }
+.reviews-status { color: var(--ink-3); font-size: var(--fs-sm); grid-column: 1 / -1; }
+
+/* Placeholder cards, sized like the real thing, so the page below keeps its
+   position while reviews load. */
+.review--skeleton { min-height: 300px; justify-content: flex-start; gap: var(--s-3); }
+.review--skeleton span {
+  display: block; height: 11px; border-radius: 3px;
+  background: var(--paper-3);
+  animation: skeleton 1.4s ease-in-out infinite;
+}
+.review--skeleton span:nth-child(1) { width: 40%; height: 14px; margin-bottom: var(--s-2); }
+.review--skeleton span:nth-child(4) { width: 65%; }
+.review--skeleton span:nth-child(5) { width: 45%; margin-top: auto; }
+@keyframes skeleton { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+@media (prefers-reduced-motion: reduce) { .review--skeleton span { animation: none; } }
 
 /* Staff */
 .staff-grid { display: grid; gap: var(--s-6); grid-template-columns: repeat(4, 1fr); }
