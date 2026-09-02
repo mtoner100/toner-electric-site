@@ -1,47 +1,63 @@
 const reviewsContainer = document.getElementById("reviews-container");
+const REVIEWS_URL = "https://toner-electric-site.onrender.com/reviews";
+
+function setMessage(text) {
+    reviewsContainer.replaceChildren();
+    const p = document.createElement("p");
+    p.textContent = text;
+    reviewsContainer.appendChild(p);
+}
 
 async function fetchReviews() {
-    const url = "https://toner-electric-site.onrender.com/reviews"; // Ensure your backend server is running
+    if (!reviewsContainer) return;
+    setMessage("Loading reviews…");
+
+    // The reviews server sleeps when idle and can take a while to wake up,
+    // so give it room but don't leave visitors hanging forever.
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 15000);
 
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        const response = await fetch(REVIEWS_URL, { signal: controller.signal });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
         const data = await response.json();
-
-        if (data.result && data.result.reviews) {
-            displayReviews(data.result.reviews);
+        if (data.reviews && data.reviews.length) {
+            displayReviews(data.reviews);
         } else {
-            reviewsContainer.innerHTML = "<p>No reviews available.</p>";
+            setMessage("No reviews to show right now.");
         }
     } catch (error) {
         console.error("Error fetching Google Reviews:", error);
-        reviewsContainer.innerHTML = "<p>Could not load reviews.</p>";
+        setMessage("Reviews couldn't be loaded. See them on our Google listing.");
+    } finally {
+        clearTimeout(timer);
     }
 }
 
 function displayReviews(reviews) {
-    reviewsContainer.innerHTML = ""; // Clear previous reviews
+    reviewsContainer.replaceChildren();
 
-    // Sort reviews by timestamp (newest first)
-    const sortedReviews = reviews.sort((a, b) => b.time - a.time).slice(0, 5);
+    reviews.forEach(review => {
+        const card = document.createElement("div");
+        card.className = "review";
 
-    sortedReviews.forEach(review => {
-        const reviewElement = document.createElement("div");
-        reviewElement.classList.add("review");
+        const header = document.createElement("div");
+        header.className = "review-header";
 
-        reviewElement.innerHTML = `
-            <div class="review-header">
-                <strong>${review.author_name}</strong> - ⭐${review.rating} (${review.relative_time_description})
-            </div>
-            <p>${review.text}</p>
-        `;
+        // Review text comes from the public - build it with textContent so a
+        // review containing HTML can never inject markup into the page.
+        const author = document.createElement("strong");
+        author.textContent = review.author;
+        header.appendChild(author);
+        header.append(` - ${"⭐".repeat(Math.round(review.rating) || 0)}${review.when ? ` (${review.when})` : ""}`);
 
-        reviewsContainer.appendChild(reviewElement);
+        const body = document.createElement("p");
+        body.textContent = review.text;
+
+        card.append(header, body);
+        reviewsContainer.appendChild(card);
     });
 }
 
-// Fetch reviews when the page loads
 fetchReviews();
