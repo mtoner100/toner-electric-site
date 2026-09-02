@@ -8,7 +8,6 @@
   <meta name="description" content="Three generations of the Toner family have wired Newport County since 1952. Meet the owners and licensed electricians behind Toner Electric Company." />
   <link rel="canonical" href="https://www.tonerelectric.com/about.html" />
 
-  <!-- Open Graph / social share cards -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Toner Electric Company" />
   <meta property="og:title" content="About Us — Family Electricians Since 1952 | Toner Electric" />
@@ -17,317 +16,387 @@
   <meta property="og:image" content="https://www.tonerelectric.com/images/og_image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Toner Electric electricians working on a residential service panel" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="images/toner_electric_favicon.ico" type="image/x-icon" />
+  <!-- @@head -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" href="images/toner_electric_favicon.ico" type="image/x-icon" />
+    <meta name="theme-color" content="#101216" />
+  <!-- @@end -->
 </head>
 <body>
 
-<!-- Sidebar Navigation -->
-<div class="mobile-sidebar" id="mobile-sidebar">
-  <div class="mobile-sidebar-header">
-    <button class="close-sidebar" id="close-sidebar">&times;</button>
+<!-- @@header -->
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="utility-bar">
+  <div class="container">
+    <ul class="utility-bar__list">
+      <li>Serving Newport County since <strong>1952</strong></li>
+      <li>Mon&ndash;Fri <strong>7:30 AM &ndash; 4:00 PM</strong></li>
+    </ul>
+    <ul class="utility-bar__list">
+      <li>305 Oliphant Ln, Unit 10, Middletown, RI</li>
+      <li><a href="https://www.facebook.com/TonerElectric/" target="_blank" rel="noopener">Facebook</a></li>
+    </ul>
   </div>
-  <ul class="mobile-nav-menu">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About Us</a></li>
-    <li><a href="electrical_services.html">Electrical</a></li>
-    <li><a href="generators.html">Generators</a></li>
-    <li><a href="fire_alarms.html">Fire Alarms</a></li>
-  </ul>
 </div>
 
+<header class="site-header">
+  <div class="container">
+    <a href="index.html" class="site-logo" data-nav="index" aria-label="Toner Electric Company, home">
+      <img src="images/logo_clear.jpeg" alt="Toner Electric Company" width="427" height="258" />
+    </a>
 
-<!-- ===== 1. HEADER / TOP INFO BAR ===== -->
-<header class="top-bar">
-  <div class="container header-flex">
-    <!-- Mobile-only header bar -->
-    <div class="mobile-header-icons">
-      <a href="tel:4018470993" class="mobile-call-icon" aria-label="Call Toner Electric">
-        <img src="images/white_phone_icon.png" alt="Call Toner Electric" width="200" height="200" />
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html" data-nav="index">Home</a></li>
+        <li><a href="electrical_services.html" data-nav="electrical_services">Electrical</a></li>
+        <li><a href="fire_alarms.html" data-nav="fire_alarms">Fire Alarms</a></li>
+        <li><a href="about.html" data-nav="about" aria-current="page">About Us</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="tel:+14018470993" class="header-phone">
+        <span>Speak to an owner</span>
+        <strong>(401) 847-0993</strong>
       </a>
-      <div class="logo">
-        <img src="images/logo_clear.jpeg" alt="Toner Electric Company Logo" width="427" height="258" />
-      </div>
-      <button class="hamburger-icon" id="mobile-menu-icon">
-        <span></span>
-        <span></span>
+      <a href="index.html#contact" class="btn btn--primary">Request an Estimate</a>
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
         <span></span>
       </button>
     </div>
-
-    <!-- Desktop layout -->
-    <div class="desktop-header-content">
-      <div class="logo">
-        <img src="images/logo_clear.jpeg" alt="Toner Electric Company Logo" width="427" height="258" />
-      </div>
-      <div class="top-bar-left">
-        <p>Serving our customers <br>since 1952</p>
-      </div>
-      <div class="top-bar-right">
-        <span class="phone-number">Call Us: <strong>(401) 847-0993</strong></span>
-        <div class="social-section">
-          <p>Find us on:</p>
-          <a href="https://www.facebook.com/TonerElectric/" target="_blank" class="social-icon" aria-label="Facebook">
-            <img src="images/facebook.png" alt="Facebook" width="225" height="225" />
-          </a>
-        </div>
-        <div class="company-address">
-          <p>305 Oliphant Ln, Unit 10</p>
-          <p>Middletown, RI 02842</p>
-        </div>
-      </div>
-    </div>
   </div>
 </header>
-  <!-- ===== NAVIGATION BAR (identical to index.html) ===== -->
-  <nav class="main-nav">
-    <div class="container nav-flex">
-      <ul class="nav-menu">
-        <!-- Link back to your home page -->
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" class="active">About Us</a></li>
-        <li><a href="fire_alarms.html">Fire Alarms</a></li>
-        <li><a href="electrical_services.html">Electric</a></li>
-        <li><a href="generators.html">Generators</a></li>
 
-        <!-- Current page: About Us -->
-        
-      </ul>
-    </div>
-  </nav>
+<div class="nav-backdrop" id="nav-backdrop"></div>
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+  <div class="mobile-nav__head">
+    <button class="mobile-nav__close" id="nav-close" aria-label="Close menu">&times;</button>
+  </div>
+  <ul>
+    <li><a href="index.html" data-nav="index">Home</a></li>
+    <li><a href="electrical_services.html" data-nav="electrical_services">Electrical Services</a></li>
+    <li><a href="fire_alarms.html" data-nav="fire_alarms">Fire Alarms</a></li>
+    <li><a href="about.html" data-nav="about" aria-current="page">About Us</a></li>
+  </ul>
+  <a href="index.html#contact" class="btn btn--primary">Request an Estimate</a>
+</nav>
+<!-- @@end -->
 
-  <section class="title-banner">
+<main id="main">
+
+  <section class="page-banner">
     <div class="container">
-      <h1>Our History and Staff</h1>
+      <span class="eyebrow">Since 1952</span>
+      <h1>Our History &amp; Staff</h1>
+      <p>
+        Toner Electric is a family owned and operated electrical contractor. Four generations
+        of the Toner family have now worked in the business.
+      </p>
     </div>
   </section>
 
-
-
-      <!-- ===== ABOUT US CONTENT ===== -->
-<section id="about-history" class="about-history-section">
+  <section class="section">
     <div class="container">
-      <!-- New wrapper for text & images -->
-      <div class="history-content">
-        
-        <!-- Left Column: Text -->
-        <div class="history-intro">
-            <p>
-                Toner Electric is a family owned and operated Electrical Contractor. The late Richard Toner
-                founded the company in 1952 and opened for business in Newport, RI. Richard performed commercial
-                and residential installations throughout Newport County and the Newport Naval Base.
-              </p>
+      <div class="split">
+        <div>
+          <span class="eyebrow">Seventy years on Aquidneck Island</span>
+          <h2>From a small Newport shop to a third-generation contractor</h2>
+          <ul class="timeline">
+            <li>
+              <span class="timeline__year">1952</span>
               <p>
-                Richard continued to run a small shop until his nephew, Frank Toner Sr., took over the company in
-                1978. Frank Sr. incorporated Toner Electric Company and operated a one-man operation from his home
-                in Middletown for several years until his sons Frank Jr. and Scott entered the business.
+                The late <strong>Richard Toner</strong> founds the company and opens for
+                business in Newport, performing commercial and residential installations
+                throughout Newport County and the Newport Naval Base.
               </p>
+            </li>
+            <li>
+              <span class="timeline__year">1978</span>
               <p>
-                In 1987 the business was moved to 305 Oliphant Ln in Middletown, RI, as the company began to grow.
-                In 2010, Frank Sr. retired and his sons took over as the new owners. Frank Toner Jr. is the President
-                and Scott Toner is the Vice President. Frank Sr. remains involved as a part-time consultant.
+                Richard's nephew <strong>Frank Toner Sr.</strong> takes over, incorporates
+                Toner Electric Company, and runs a one-man operation from his home in
+                Middletown.
               </p>
+            </li>
+            <li>
+              <span class="timeline__year">1987</span>
               <p>
-                As the third generation of Toner Electric Company, we look forward to continuing our tradition of
-                quality workmanship for customers in Newport, RI, and surrounding towns.
+                The business moves to 305 Oliphant Lane in Middletown as it grows, with sons
+                Frank Jr. and Scott entering the trade.
               </p>
+            </li>
+            <li>
+              <span class="timeline__year">2010</span>
+              <p>
+                Frank Sr. retires and his sons take over as owners. <strong>Frank Toner Jr.</strong>
+                is President and <strong>Scott Toner</strong> is Vice President. Frank Sr. remains
+                involved as a part-time consultant.
+              </p>
+            </li>
+            <li>
+              <span class="timeline__year">Today</span>
+              <p>
+                As the third generation of Toner Electric Company, we look forward to
+                continuing our tradition of quality workmanship for customers in Newport
+                and the surrounding towns.
+              </p>
+            </li>
+          </ul>
         </div>
-  
-        <div class="history-images">
-            <img src="images/bucket_truck_2.jpeg" alt="Toner Electric Company Trucks" width="400" height="162" loading="lazy" decoding="async" />
-          
-            <figure>
-              <img src="images/old_car.jpeg" alt="Historic Toner Electric Vehicles" width="413" height="298" loading="lazy" decoding="async" />
-              <figcaption>One of Toner Electric's original service vehicles from 1952!</figcaption>
-            </figure>
-          </div>
+        <div class="split__media">
+          <figure style="margin:0">
+            <img src="images/old_car.jpeg" alt="One of Toner Electric's original service vehicles" width="413" height="298" loading="lazy" decoding="async" />
+            <figcaption style="font-size:var(--fs-sm);color:var(--ink-3);margin-top:.75rem">
+              One of Toner Electric's original service vehicles from 1952.
+            </figcaption>
+          </figure>
+          <figure style="margin:2rem 0 0">
+            <img src="images/bucket_truck_2.jpeg" alt="Toner Electric service trucks" width="400" height="162" loading="lazy" decoding="async" />
+            <figcaption style="font-size:var(--fs-sm);color:var(--ink-3);margin-top:.75rem">
+              The fleet today.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
   </section>
 
-    <!-- ===== FOUNDER SPOTLIGHT BANNER ===== -->
-<section class="founder-banner">
+  <section class="section section--dark">
     <div class="container">
-      <div class="founder-content">
-        <!-- Left: Founder Image -->
-        <div class="founder-image">
-          <img src="images/richard_toner.jpeg" alt="Richard Toner" width="130" height="130" loading="lazy" decoding="async" />
+      <div class="split">
+        <div class="split__media">
+          <img src="images/richard_toner.jpeg" alt="Richard Toner, founder" width="130" height="130" loading="lazy" decoding="async" style="max-width:260px;border-radius:var(--radius-lg)" />
         </div>
-        
-        <!-- Right: Founder Details -->
-        <div class="founder-text">
-          <h2>Richard Toner - Founder, Owned Toner Electric from 1952-1978</h2>
+        <div>
+          <span class="eyebrow">Founder &middot; 1952&ndash;1978</span>
+          <h2>Richard Toner</h2>
           <p>
-            Richie founded Toner Electric Company in 1952 when he opened for business at 62 West Broadway 
-            (now Dr. Marcus Wheatland Boulevard) in Newport. He started doing residential work and then moved 
-            on to commercial, municipal, and US Navy contracting. He retired in 1978.
+            Richie founded Toner Electric Company in 1952 when he opened for business at
+            62 West Broadway (now Dr. Marcus Wheatland Boulevard) in Newport. He started
+            doing residential work and then moved on to commercial, municipal, and US Navy
+            contracting. He retired in 1978.
           </p>
           <p>
-            In his spare time, Richie was a pilot, thoroughbred horse enthusiast, and amateur historian, 
-            particularly interested in Abraham Lincoln, the Civil War, and Hollywood producers. After he retired, 
-            he started every day with a two-mile walk. He passed away in 2000 at age 82.
+            In his spare time, Richie was a pilot, thoroughbred horse enthusiast, and amateur
+            historian, particularly interested in Abraham Lincoln, the Civil War, and
+            Hollywood producers. After he retired, he started every day with a two-mile walk.
+            He passed away in 2000 at age 82.
           </p>
         </div>
       </div>
     </div>
   </section>
-  
 
-
-      <!-- Staff Grid -->
-<div class="staff-grid">
-    <!-- Frank Toner Sr. -->
-    <div class="staff-member">
-        <img src="images/frank_toner_sr.jpeg" alt="Frank Toner Sr." width="130" height="130" loading="lazy" decoding="async" />
-        <h4>Frank Toner Sr. – Owned Toner Electric (1978–2000)</h4>
-        <p>
-            Frank Sr. began working for Toner Electric in 1973. He took over as President in 1978
-            and steadily grew the company from a single‐truck operation into a trusted local brand.
-            He retired in 2000, handing over management to his sons.
-        </p>
-    </div>
-
-    <!-- Frank Toner Jr. -->
-    <div class="staff-member">
-        <img src="images/frank_toner_jr.jpeg" alt="Frank Toner Jr." width="130" height="130" loading="lazy" decoding="async" />
-        <h4>Frank Toner Jr. – President since 1992</h4>
-        <p>
-            Frank started learning the trade under his father’s mentorship, then joined full-time
-            after college in 1992. He oversees all major projects, ensuring Toner Electric’s
-            quality and customer service remain top-notch.
-        </p>
-    </div>
-
-    <!-- Scott Toner -->
-    <div class="staff-member">
-        <img src="images/scott_toner.jpeg" alt="Scott Toner" width="130" height="130" loading="lazy" decoding="async" />
-        <h4>Scott Toner – Vice President since 1995</h4>
-        <p>
-            Scott’s background includes several years working side by side with Frank Sr. before
-            becoming Vice President in 1995. He handles day-to-day operations and loves connecting
-            with customers throughout Newport County.
-        </p>
-    </div>
-    <!-- Aidan Toner -->
-    <div class="staff-member">
-        <img src="images/aidan_toner_final.webp" alt="Aidan Toner" width="300" height="372" loading="lazy" decoding="async" />
-        <h4>Aidan Toner – Apprentice Electrician since 2022</h4>
-        <p>
-          Aidan represents the fourth generation of Toner Electric. He is currently training as an 
-          apprentice electrician, learning the trade from his father and uncle while also studying at the University of Rhode Island.
-        </p>
-    </div>
-</div>
-
-<!-- ===== Four-Person Staff Section ===== -->
-<section class="staff-grid-four">
-    <!-- James Robinson -->
-    <div class="staff-member">
-        <img src="images/james_robinson.jpeg" alt="James Robinson" width="130" height="130" loading="lazy" decoding="async" />
-        <h4>James Robinson - Journeyman Electrician, Worked at Toner Electric since: 2000</h4>
-        <p>
-            “Jimmy” is a Journeyman electrician who specializes in Fire Alarm installations, 
-            testing, and repairs. He is likely the one you will see when your Fire Alarm needs 
-            testing. He has an outgoing personality and he enjoys spending time with his 
-            family and friends.
-        </p>
-    </div>
-
-    <!-- Jeff Belli -->
-    <div class="staff-member">
-        <img src="images/jeff_beli.jpeg" alt="Jeff Belli" width="130" height="130" loading="lazy" decoding="async" />
-        <h4>Jeff Belli - Master Generator Technician, Worked at Toner Electric 2004 to 2025 RIP</h4>
-        <p>
-            Jeff is a Veteran of the US Army. He proudly served his country doing (3) tours 
-            of service in Iraq and Afghanistan. He was honorably discharged from the Army 
-            and began his career with Toner Electric shortly thereafter.
-        </p>
-        <p>
-            He is a Certified Technician for Generac and Honeywell generators and is Lead 
-            Technician in the generator division of Toner Electric. He is also a licensed 
-            Journeyman electrician. He enjoys outdoor activities such as hiking, skydiving, 
-            and ATVing.
-        </p>
-    </div>
-
-    <!-- Russ Ramos -->
-    <div class="staff-member">
-        <img src="images/russ_ramos.webp" alt="Russ Ramos" width="300" height="320" loading="lazy" decoding="async" />
-        <h4>Russ Ramos - Journeyman Electrician, Worked at Toner since: 2005</h4>
-        <p>
-            Russ is a Journeyman electrician who specializes in commercial electrical wiring 
-            and fire alarm testing. Russ takes pride in his work and is routinely complimented 
-            for his work ethic, friendliness, and neatness.
-        </p>
-    </div>
-
-    <!-- Steve Cook -->
-    <div class="staff-member">
-        <img src="images/steve_cook_final.webp" alt="Steve Cook" width="300" height="367" loading="lazy" decoding="async" />
-        <h4>Steve Cook - Journeyman Electrician, Worked at Toner Electric since 2020</h4>
-        <p>
-            Steve began his career after high school and was a quick learner thanks to his mechanical mind. 
-            He specializes in new construction, electrical upgrades, and generator installations.
-            He receives many compliments for his attention to detail and customer service. His nickname is "Cookie". 
-        </p>
-    </div>
-</section>
-
-
-  <!-- ===== FOOTER (same as your main page) ===== -->
-  <footer class="footer-section">
-    <div class="container footer-flex">
-      <div class="footer-contact">
-        <h3>Contact Information</h3>
-        <p><strong>Phone:</strong> (401) 847-0993</p>
-        <p><strong>Address:</strong> 305 Oliphant Ln, Unit 10, Middletown, RI 02842</p>
-        <p><strong>Hours of Operation:</strong> Mon-Fri, 7:30 AM – 4:00 PM</p>
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The family</span>
+        <h2>Ownership</h2>
       </div>
-      <div class="footer-map">
-        <h3>Our Location</h3>
-        <!-- Replace with your real map embed code -->
+      <div class="staff-grid">
+        <article class="staff-card">
+          <img src="images/frank_toner_sr.jpeg" alt="Frank Toner Sr." width="130" height="130" loading="lazy" decoding="async" />
+          <h4>Frank Toner Sr.</h4>
+          <span class="staff-card__role">Owner, 1978&ndash;2000</span>
+          <p>
+            Frank Sr. began working for Toner Electric in 1973 and took over as President in
+            1978, growing the company from a single-truck operation into a trusted local
+            brand. He retired in 2000, handing management to his sons.
+          </p>
+        </article>
+        <article class="staff-card">
+          <img src="images/frank_toner_jr.jpeg" alt="Frank Toner Jr." width="130" height="130" loading="lazy" decoding="async" />
+          <h4>Frank Toner Jr.</h4>
+          <span class="staff-card__role">President since 1992</span>
+          <p>
+            Frank started learning the trade under his father's mentorship, then joined
+            full-time after college in 1992. He oversees all major projects and is your
+            contact for commercial and fire alarm work.
+          </p>
+        </article>
+        <article class="staff-card">
+          <img src="images/scott_toner.jpeg" alt="Scott Toner" width="130" height="130" loading="lazy" decoding="async" />
+          <h4>Scott Toner</h4>
+          <span class="staff-card__role">Vice President since 1995</span>
+          <p>
+            Scott spent several years working side by side with Frank Sr. before becoming
+            Vice President in 1995. He handles day-to-day operations and is your contact for
+            residential work.
+          </p>
+        </article>
+        <article class="staff-card">
+          <img src="images/aidan_toner_final.webp" alt="Aidan Toner" width="300" height="372" loading="lazy" decoding="async" />
+          <h4>Aidan Toner</h4>
+          <span class="staff-card__role">Apprentice Electrician since 2022</span>
+          <p>
+            Aidan represents the fourth generation of Toner Electric. He is training as an
+            apprentice electrician, learning the trade from his father and uncle while
+            studying at the University of Rhode Island.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Our electricians</span>
+        <h2>The crew</h2>
+      </div>
+      <div class="staff-grid">
+        <article class="staff-card">
+          <img src="images/james_robinson.jpeg" alt="James Robinson" width="130" height="130" loading="lazy" decoding="async" />
+          <h4>James Robinson</h4>
+          <span class="staff-card__role">Journeyman Electrician since 2000</span>
+          <p>
+            "Jimmy" specialises in fire alarm installations, testing and repairs, and is
+            likely the one you will see when your fire alarm needs testing. He has an
+            outgoing personality and enjoys spending time with family and friends.
+          </p>
+        </article>
+        <article class="staff-card">
+          <img src="images/russ_ramos.webp" alt="Russ Ramos" width="300" height="320" loading="lazy" decoding="async" />
+          <h4>Russ Ramos</h4>
+          <span class="staff-card__role">Journeyman Electrician since 2005</span>
+          <p>
+            Russ specialises in commercial electrical wiring and fire alarm testing. He takes
+            pride in his work and is routinely complimented for his work ethic, friendliness
+            and neatness.
+          </p>
+        </article>
+        <article class="staff-card">
+          <img src="images/steve_cook_final.webp" alt="Steve Cook" width="300" height="367" loading="lazy" decoding="async" />
+          <h4>Steve Cook</h4>
+          <span class="staff-card__role">Journeyman Electrician since 2020</span>
+          <p>
+            Steve began his career after high school and was a quick learner thanks to his
+            mechanical mind. He specialises in new construction and electrical upgrades, and
+            receives many compliments for his attention to detail. His nickname is "Cookie".
+          </p>
+        </article>
+        <article class="staff-card">
+          <img src="images/jeff_beli.jpeg" alt="Jeff Belli" width="130" height="130" loading="lazy" decoding="async" />
+          <h4>Jeff Belli</h4>
+          <span class="staff-card__role">In memory &middot; 2004&ndash;2025</span>
+          <p>
+            Jeff was a veteran of the US Army who served three tours in Iraq and Afghanistan
+            before joining Toner Electric. A licensed journeyman electrician and certified
+            Generac technician, he led our generator division for two decades. He enjoyed
+            hiking, skydiving and ATVing. He is greatly missed.
+          </p>
+        </article>
+      </div>
+      <p style="margin-top:2rem;font-size:var(--fs-sm);color:var(--ink-3)">
+        Following Jeff's passing, our generator division closed in April 2025.
+        <a href="generators.html">Read the notice from Scott Toner</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Get in touch</span>
+        <h2>Talk to an owner</h2>
+        <p>Best reached between 7:30 and 10:00 AM, Monday to Friday.</p>
+      </div>
+      <p>
+        <a href="tel:+14018470993" class="btn btn--primary">Call (401) 847-0993</a>
+        <a href="index.html#contact" class="btn btn--ghost">Request an estimate</a>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<!-- @@footer -->
+<footer class="site-footer" id="contact-footer">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div>
+        <div class="footer-logo">
+          <img src="images/logo_footer.png" alt="Toner Electric Company" width="427" height="258" loading="lazy" />
+        </div>
+        <p class="footer-tagline">
+          Family owned and operated in Middletown, Rhode Island since 1952. Three
+          generations of licensed electricians serving Aquidneck Island.
+        </p>
+        <p style="margin-top:1rem">
+          <a href="https://www.facebook.com/TonerElectric/" class="social-link" target="_blank" rel="noopener" aria-label="Toner Electric on Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.09 10.12 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.1 24 12.07Z"/></svg>
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h3>Services</h3>
+        <ul>
+          <li><a href="electrical_services.html">Electrical Services</a></li>
+          <li><a href="fire_alarms.html">Commercial Fire Alarms</a></li>
+          <li><a href="electrical_services.html#ev">EV Charger Installation</a></li>
+          <li><a href="generators.html">Generators</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">Our History &amp; Staff</a></li>
+          <li><a href="index.html#reviews">Customer Reviews</a></li>
+          <li><a href="index.html#contact">Request an Estimate</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Get in touch</h3>
+        <div class="footer-contact-line">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+          <span><strong>(401) 847-0993</strong>
+          <a href="tel:+14018470993">Tap to call</a></span>
+        </div>
+        <div class="footer-contact-line">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span><strong>305 Oliphant Ln, Unit 10</strong>Middletown, RI 02842</span>
+        </div>
+        <div class="footer-contact-line">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <span><strong>Mon&ndash;Fri, 7:30 AM &ndash; 4:00 PM</strong>Best reached 7:30&ndash;10:00 AM</span>
+        </div>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2986.5634123489444!2d-71.28343442344567!3d41.53539678680066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e5a94e65452e05%3A0x8530d0d5a466691!2sToner%20Electric%20Company!5e0!3m2!1sen!2sus!4v1739912990725!5m2!1sen!2sus"
-          width="100%"
-          height="200"
-          style="border:0;"
-          allowfullscreen=""
-          loading="lazy"
-        ></iframe>
+          title="Toner Electric Company location on Google Maps"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container">
-        <p>&copy; 2025 Toner Electric Company | All Rights Reserved</p>
-        <p><a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a></p>
-      </div>
-    </div>
-  </footer>
-  <script>
-    // For the mobile nav menu
-    const mobileMenuIcon = document.getElementById('mobile-menu-icon');
-    const mobileSidebar = document.getElementById('mobile-sidebar');
-    const navCloseBtn = document.getElementById('close-sidebar');
-  
-    mobileMenuIcon.addEventListener('click', () => {
-      mobileSidebar.classList.add('open');
-    });
-  
-    navCloseBtn.addEventListener('click', () => {
-      mobileSidebar.classList.remove('open');
-    });
-  
-    // Optional: close menu if user clicks outside of sidebar
-    document.addEventListener('click', (e) => {
-      if (!mobileSidebar.contains(e.target) && !mobileMenuIcon.contains(e.target)) {
-        mobileSidebar.classList.remove('open');
-      }
-    });
-  </script>
 
-  <!-- Cloudflare Web Analytics (no cookies, no consent banner needed) -->
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "d627fcf12cc8423f9c4593008c27ef6f"}'></script>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p style="margin:0">&copy; 2026 Toner Electric Co Inc. &middot; RI Licensed Electrical Contractor</p>
+      <p style="margin:0">Newport &middot; Middletown &middot; Portsmouth &middot; Jamestown &middot; Tiverton &middot; Little Compton</p>
+    </div>
+  </div>
+</footer>
+
+<div class="call-bar">
+  <a href="tel:+14018470993" class="btn btn--primary">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.4 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+    Call (401) 847-0993
+  </a>
+</div>
+
+<script src="js/site.js" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "d627fcf12cc8423f9c4593008c27ef6f"}'></script>
+<!-- @@end -->
 
 </body>
 </html>
