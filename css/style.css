@@ -277,7 +277,7 @@
   
   /* 4. HERO SECTION */
   .hero-section {
-    background: url('../images/bridge_lightning.png') no-repeat center center/cover;
+    background: url('../images/bridge_lightning.webp') no-repeat center center/cover;
     position: relative;
     min-height: 400px;
     color: #fff;
