@@ -30,6 +30,19 @@ It has no dependencies — plain Node, nothing to install, nothing to go stale.
 If it ever stops working, just edit the header in each HTML file by hand;
 nothing depends on it.
 
+## Service area pages
+
+The six town landing pages (`electrician-newport-ri.html` and friends) are
+generated from `build/service-areas.js`, where each town's copy lives.
+
+    node build/service-areas.js   # rebuild the pages
+    node build/sync.js            # then refresh header/footer
+
+Each town's copy is deliberately different. Google treats near-identical town
+pages as "doorway pages" and demotes them, so if you add a town, write real
+content about that town rather than copying another and swapping the name.
+Remember to add it to `sitemap.xml` and the footer list too.
+
 ## Structure
 
 ```
