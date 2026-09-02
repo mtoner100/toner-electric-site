@@ -65,21 +65,6 @@ const towns = [
       "From a light fixture in a Common Fence Point cottage to a sub-panel in a barn off East Main Road, we cover the whole town."
   },
   {
-    slug: "jamestown",
-    name: "Jamestown",
-    drive: "about 25 minutes over the Newport Pell Bridge",
-    intro:
-      "Jamestown sits on Conanicut Island, and the electrical work reflects it. Salt air is hard on outdoor equipment, meter sockets and service masts corrode faster than they do inland, and a good number of properties are seasonal homes that sit empty for months at a time.",
-    focus: [
-      ["Corrosion on exterior equipment", "Meter sockets, service masts, outdoor receptacles and disconnects take a beating from salt air and need replacing sooner than inland."],
-      ["Seasonal and second homes", "Systems that sit idle for months, then get switched on all at once. Worth checking before the season rather than during it."],
-      ["Service upgrades for older cottages", "Many shoreline properties still run on services sized for a very different era of electrical demand."],
-      ["Outdoor and dock lighting", "Weather-rated fixtures, GFCI protection and wiring specified for a coastal environment."]
-    ],
-    closing:
-      "We cross the bridge for Jamestown work regularly, and we bring what the job needs so it does not turn into a second trip."
-  },
-  {
     slug: "tiverton",
     name: "Tiverton",
     drive: "about 30 minutes via the Sakonnet River Bridge",
