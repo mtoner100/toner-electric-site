@@ -194,8 +194,14 @@
           </div>
         </div>
         <div class="fb-embed">
+          <!-- show_posts=true rather than tabs=timeline. In October 2026 Facebook's
+               widget stopped showing posts to visitors who aren't logged in when
+               using the timeline tab; show_posts still works. Meta lists show_posts
+               as deprecated, so if this box ever goes blank again, that flag has
+               probably been retired too. Fallback: replace the widget with a static
+               featured post and a link to the Facebook page. -->
           <iframe
-            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FTonerElectric&tabs=timeline&width=400&height=560&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+            src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FTonerElectric&show_posts=true&width=400&height=560&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
             title="Toner Electric Company on Facebook"
             width="400" height="560"
             style="border:none;overflow:hidden" scrolling="no" frameborder="0"
