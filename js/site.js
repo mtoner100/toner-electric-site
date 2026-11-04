@@ -59,9 +59,7 @@
     const v = name => (form.elements[name]?.value || "").trim();
 
     const kind = v("jobtype");
-    const to = kind === "Commercial" || kind === "Fire alarm"
-      ? "frank@tonerelectric.com"
-      : "scott@tonerelectric.com";
+    const to = "estimates@tonerelectric.com";
 
     const body = [
       `Name:  ${v("name")}`,
