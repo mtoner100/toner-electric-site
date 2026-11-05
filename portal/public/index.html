@@ -92,6 +92,8 @@
   .b-warn { background: var(--warn-bg); color: var(--warn-ink); }
   .b-fail { background: var(--fail-bg); color: var(--fail-ink); }
   .b-rev  { background: var(--warn-bg); color: var(--warn-ink); }
+  .b-over { background: #c62828; color: #fff; }
+  .prop-name .badge { margin-left: 10px; vertical-align: 3px; }
   .serial { color: var(--muted); font-size: 13.5px; margin-left: auto; }
   .open {
     font-size: 15px; font-weight: 700; text-decoration: none;
@@ -133,6 +135,7 @@
         <option value="corrected">Problems corrected</option>
         <option value="fail">Needs repairs</option>
       </select>
+      <label class="check"><input id="f-overdue" type="checkbox"> Overdue</label>
       <label class="check"><input id="f-review" type="checkbox"> Needs review</label>
       <button id="clear">Clear all</button>
     </div>
@@ -149,9 +152,10 @@ let MODEL = { properties: [], byProp: new Map() };
 const $ = (id) => document.getElementById(id);
 const els = {
   q: $("q"), town: $("f-town"), year: $("f-year"), type: $("f-type"),
-  outcome: $("f-outcome"), review: $("f-review"), clear: $("clear"),
-  counts: $("counts"), results: $("results"),
+  outcome: $("f-outcome"), review: $("f-review"), overdue: $("f-overdue"),
+  clear: $("clear"), counts: $("counts"), results: $("results"),
 };
+let TODAY = "";
 
 init();
 
@@ -176,6 +180,7 @@ async function init() {
     if (p) p.inspections.push(i);
   }
   MODEL = { properties: [...byProp.values()], byProp, meta: data.meta || {} };
+  computeDue();
 
   fillSelect(els.town, distinct(MODEL.properties.map((p) => p.town)));
   const years = distinct(
@@ -183,15 +188,61 @@ async function init() {
   ).sort().reverse();
   fillSelect(els.year, years);
 
-  for (const el of [els.town, els.year, els.type, els.outcome, els.review])
+  for (const el of [els.town, els.year, els.type, els.outcome, els.review, els.overdue])
     el.addEventListener("change", render);
   els.q.addEventListener("input", render);
   els.clear.addEventListener("click", () => {
     els.q.value = ""; els.town.value = ""; els.year.value = "";
     els.type.value = ""; els.outcome.value = ""; els.review.checked = false;
+    els.overdue.checked = false;
     render(); els.q.focus();
   });
   render();
+}
+
+// Next-due + overdue. Every dated quarterly/semi-annual record gets a
+// next_due (+3 or +6 months). Only the LATEST dated record per
+// property+building is the current cycle; it is overdue when its next_due
+// has passed with no newer inspection on file. Older records are history,
+// never overdue — their follow-up already happened.
+function computeDue() {
+  const INTERVAL = { quarterly: 3, semi_annual: 6 };
+  TODAY = isoToday();
+  for (const p of MODEL.properties) {
+    p.overdueCount = 0;
+    const latest = new Map();
+    for (const i of p.inspections) {
+      const m = INTERVAL[i.inspection_type];
+      if (i.date && m) i.next_due = addMonths(i.date, m);
+      if (!i.date) continue;
+      const k = i.building || "";
+      const cur = latest.get(k);
+      if (!cur || i.date > cur.date) latest.set(k, i);
+    }
+    for (const i of latest.values()) {
+      if (!i.next_due) continue;
+      i.is_current = true;
+      if (i.next_due < TODAY) { i.overdue = true; p.overdueCount++; }
+    }
+  }
+}
+
+function addMonths(iso, m) {
+  let [y, mo, d] = iso.split("-").map(Number);
+  mo += m; y += Math.floor((mo - 1) / 12); mo = ((mo - 1) % 12) + 1;
+  const last = new Date(y, mo, 0).getDate();
+  if (d > last) d = last;
+  return `${y}-${String(mo).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+}
+
+function isoToday() {
+  const n = new Date();
+  return `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, "0")}-${String(n.getDate()).padStart(2, "0")}`;
+}
+
+function daysLate(iso) {
+  const utc = (s) => { const [y, m, d] = s.split("-").map(Number); return Date.UTC(y, m - 1, d); };
+  return Math.round((utc(TODAY) - utc(iso)) / 86400000);
 }
 
 function distinct(arr) {
@@ -214,8 +265,8 @@ function render() {
   const q = norm(els.q.value);
   const town = els.town.value, year = els.year.value,
         type = els.type.value, outcome = els.outcome.value,
-        reviewOnly = els.review.checked;
-  const filtering = q || town || year || type || outcome || reviewOnly;
+        reviewOnly = els.review.checked, overdueOnly = els.overdue.checked;
+  const filtering = q || town || year || type || outcome || reviewOnly || overdueOnly;
   els.clear.style.display = filtering ? "inline" : "none";
 
   let shownProps = 0, shownInsp = 0;
@@ -234,6 +285,7 @@ function render() {
       if (type && i.inspection_type !== type) return false;
       if (outcome && i.outcome !== outcome) return false;
       if (reviewOnly && !i.needs_review) return false;
+      if (overdueOnly && !i.overdue) return false;
       return true;
     });
     if (!rows.length) continue;
@@ -252,16 +304,20 @@ function render() {
     els.results.appendChild(d);
   }
   const totalInsp = MODEL.properties.reduce((n, p) => n + p.inspections.length, 0);
+  const overProps = MODEL.properties.filter((p) => p.overdueCount).length;
   els.counts.textContent = filtering
     ? `Showing ${shownInsp} inspection${shownInsp === 1 ? "" : "s"} at ${shownProps} propert${shownProps === 1 ? "y" : "ies"}`
-    : `${totalInsp} inspections · ${MODEL.properties.length} properties on file`;
+    : `${totalInsp} inspections · ${MODEL.properties.length} properties on file` +
+      (overProps ? ` · ${overProps} overdue` : "");
 }
 
 function propCard(p, rows) {
   const card = el("div", "prop");
   const head = el("div", "prop-head");
   const name = p.display_name || p.address;
-  head.appendChild(el("div", "prop-name", name));
+  const nameDiv = el("div", "prop-name", name);
+  if (p.overdueCount) nameDiv.appendChild(el("span", "badge b-over", "OVERDUE"));
+  head.appendChild(nameDiv);
   const subBits = [];
   if (p.display_name) subBits.push(p.address);
   if (p.town) subBits.push(p.town);
@@ -285,6 +341,18 @@ function inspRow(i) {
     const r = el("span", "badge b-rev", "⚠ review");
     if (i.review_reason) r.title = i.review_reason;
     row.appendChild(r);
+  }
+  if (i.is_current && i.next_due) {
+    if (i.overdue) {
+      const n = daysLate(i.next_due);
+      const b = el("span", "badge b-over", `OVERDUE ${n} day${n === 1 ? "" : "s"}`);
+      b.title = `Next ${typeLabel(i).toLowerCase()} was due ${fmtDate(i.next_due)}`;
+      row.appendChild(b);
+    } else {
+      const c = el("span", "chip", `Next due ${fmtDate(i.next_due)}`);
+      c.title = "Based on the inspection type's interval";
+      row.appendChild(c);
+    }
   }
   if (i.marshal_serial) row.appendChild(el("span", "serial", "Serial " + i.marshal_serial));
   const a = el("a", "open" + (i.has_pdf ? "" : " none"), i.has_pdf ? "Open PDF" : "No PDF");
