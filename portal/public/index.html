@@ -98,13 +98,21 @@
   .open {
     font-size: 15px; font-weight: 700; text-decoration: none;
     color: #fff; background: var(--accent); border-radius: 9px; padding: 7px 14px;
+    margin-left: auto;
   }
+  .serial ~ .open { margin-left: 12px; }
   .open.none { background: var(--chip-bg); color: var(--muted); pointer-events: none; }
+  .drive {
+    font-size: 14px; font-weight: 700; text-decoration: none;
+    color: var(--accent); background: var(--card);
+    border: 1.5px solid var(--line); border-radius: 9px; padding: 6px 12px;
+  }
   .empty { text-align: center; color: var(--muted); padding: 70px 20px; font-size: 18px; }
   footer { text-align: center; color: var(--muted); font-size: 13px; padding: 20px; }
   @media (max-width: 560px) {
     .serial { display: none; }
     .d { min-width: 104px; }
+    .row .open { margin-left: auto; }
   }
 </style>
 </head>
@@ -358,6 +366,13 @@ function inspRow(i) {
   const a = el("a", "open" + (i.has_pdf ? "" : " none"), i.has_pdf ? "Open PDF" : "No PDF");
   if (i.has_pdf) { a.href = "/api/pdf/" + i.id; a.target = "_blank"; a.rel = "noopener"; }
   row.appendChild(a);
+  if (i.drive_file_id) {
+    const g = el("a", "drive", "Drive");
+    g.href = "https://drive.google.com/file/d/" + i.drive_file_id + "/view";
+    g.target = "_blank"; g.rel = "noopener";
+    g.title = "Show in Google Drive";
+    row.appendChild(g);
+  }
   return row;
 }
 

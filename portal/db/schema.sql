@@ -30,7 +30,8 @@ CREATE TABLE inspections (
   review_reason TEXT,
   pdf_key TEXT,                       -- R2 object key of the canonical per-inspection PDF
   source_file TEXT,                   -- original scan filename
-  source_pages TEXT                   -- pages within the original, e.g. "1-2" or "7"
+  source_pages TEXT,                  -- pages within the original, e.g. "1-2" or "7"
+  drive_file_id TEXT                  -- Google Drive file id of the mirrored PDF
 );
 
 CREATE INDEX idx_insp_property ON inspections(property_id);

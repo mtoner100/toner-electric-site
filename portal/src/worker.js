@@ -127,7 +127,7 @@ async function apiIndex(env) {
     await env.DB.prepare(
       `SELECT id, property_id, date, inspection_type, quarter, outcome,
               marshal_serial, master_box, panel, remarks, building,
-              needs_review, review_reason,
+              needs_review, review_reason, drive_file_id,
               pdf_key IS NOT NULL AS has_pdf
        FROM inspections
        ORDER BY date DESC, id DESC`,
