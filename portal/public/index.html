@@ -5,122 +5,190 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Fire Alarm Records</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap">
 <style>
   :root {
-    --bg: #f2f4f6;
-    --card: #ffffff;
-    --ink: #17222c;
-    --muted: #5b6b78;
-    --line: #dde3e8;
-    --brand: #141c24;
-    --brand-ink: #f5d33f;
-    --accent: #0b64c4;
-    --pass-bg: #e2f3e6; --pass-ink: #1a6b2f;
-    --warn-bg: #fdf0d7; --warn-ink: #8a5b00;
-    --fail-bg: #fbe3e1; --fail-ink: #a22219;
-    --chip-bg: #eef1f4; --chip-ink: #44525e;
+    /* Matches css/style.css on www.tonerelectric.com */
+    --bg: #F5F6F8;
+    --card: #FFFFFF;
+    --ink: #14161A;
+    --ink-2: #3D434D;
+    --muted: #6B7280;
+    --line: #DFE2E7;
+    --brand-black: #101216;
+    --gold: #FFC72C;
+    --gold-hover: #FFD65C;
+    --gold-deep: #8F6203;
+    --link: #8F6203;
+    --head-bg: #FFFFFF;
+    --pass-bg: #E2F3E6; --pass-ink: #1A6B2F;
+    --warn-bg: #FDF0D7; --warn-ink: #8A5B00;
+    --fail-bg: #FBE3E1; --fail-ink: #A22219;
+    --over: #C62828;
+    --chip-bg: #EEF0F3; --chip-ink: #3D434D;
+    --radius: 6px; --radius-lg: 10px;
+    --shadow-sm: 0 1px 2px rgba(16,18,22,.06), 0 1px 3px rgba(16,18,22,.08);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #10161c; --card: #19222b; --ink: #e8edf1; --muted: #93a3b1;
-      --line: #2a3640; --brand: #0c1217; --accent: #5aa5e8;
-      --pass-bg: #15301c; --pass-ink: #7bd694;
-      --warn-bg: #352a10; --warn-ink: #ecc064;
-      --fail-bg: #3a1a17; --fail-ink: #f09a92;
-      --chip-bg: #232e38; --chip-ink: #aebbc7;
+      --bg: #101216; --card: #181C22; --ink: #E9EBEE; --ink-2: #C2C7CF;
+      --muted: #8A919C; --line: #2A2E35; --link: #FFC72C; --head-bg: #0C0E12;
+      --pass-bg: #15301C; --pass-ink: #7BD694;
+      --warn-bg: #352A10; --warn-ink: #ECC064;
+      --fail-bg: #3A1A17; --fail-ink: #F09A92;
+      --chip-bg: #242932; --chip-ink: #C2C7CF;
     }
   }
   * { box-sizing: border-box; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
-    font: 17px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font: 400 16px/1.45 "Barlow", "Helvetica Neue", Arial, sans-serif;
   }
   header {
-    background: var(--brand); color: #fff; padding: 18px 20px;
+    background: var(--head-bg); border-bottom: 1px solid var(--line);
+    padding: 12px 20px;
   }
-  .head-inner { max-width: 980px; margin: 0 auto; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  .wordmark { font-weight: 800; letter-spacing: .12em; font-size: 20px; }
-  .wordmark .bolt { color: var(--brand-ink); }
-  .head-sub { color: #c7d2dc; font-size: 15px; }
+  .head-inner {
+    max-width: 1020px; margin: 0 auto;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .head-inner img { height: 46px; width: auto; display: block; }
+  .head-inner .logo-dark { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .head-inner .logo-light { display: none; }
+    :root:not([data-theme="light"]) .head-inner .logo-dark { display: block; }
+  }
+  .head-title {
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700; font-size: 19px; letter-spacing: .01em;
+  }
+  .head-title small {
+    display: block; font-family: "Barlow", sans-serif; font-weight: 500;
+    font-size: 13.5px; color: var(--muted); letter-spacing: .02em;
+  }
   .controls {
     position: sticky; top: 0; z-index: 5;
     background: var(--bg); border-bottom: 1px solid var(--line);
     padding: 14px 20px 12px;
   }
-  .controls-inner { max-width: 980px; margin: 0 auto; }
+  .controls-inner { max-width: 1020px; margin: 0 auto; }
   #q {
-    width: 100%; font-size: 20px; padding: 13px 16px;
-    border: 2px solid var(--line); border-radius: 12px;
+    width: 100%; font-size: 19px; padding: 12px 16px;
+    font-family: "Barlow", sans-serif;
+    border: 2px solid var(--line); border-radius: var(--radius-lg);
     background: var(--card); color: var(--ink); outline: none;
   }
-  #q:focus { border-color: var(--accent); }
+  #q:focus { border-color: var(--gold); }
   .filters { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
   .filters select {
-    font-size: 15px; padding: 7px 10px; border-radius: 9px;
+    font-size: 15px; font-family: "Barlow", sans-serif; padding: 7px 10px;
+    border-radius: var(--radius);
     border: 1.5px solid var(--line); background: var(--card); color: var(--ink);
   }
   .filters label.check {
     display: inline-flex; align-items: center; gap: 6px; font-size: 15px;
-    color: var(--muted); padding: 6px 4px; cursor: pointer; user-select: none;
+    color: var(--ink-2); padding: 6px 4px; cursor: pointer; user-select: none;
   }
+  .filters input[type="checkbox"] { accent-color: var(--gold-deep); }
   #clear {
-    font-size: 14px; border: none; background: none; color: var(--accent);
-    cursor: pointer; padding: 6px 4px; display: none;
+    font-size: 14px; font-weight: 600; border: none; background: none;
+    color: var(--link); cursor: pointer; padding: 6px 4px; display: none;
+    font-family: "Barlow", sans-serif;
   }
-  .counts { max-width: 980px; margin: 14px auto 0; padding: 0 20px; color: var(--muted); font-size: 15px; }
-  main { max-width: 980px; margin: 10px auto 60px; padding: 0 20px; }
+  .counts { max-width: 1020px; margin: 14px auto 0; padding: 0 20px; color: var(--muted); font-size: 15px; }
+  main { max-width: 1020px; margin: 10px auto 60px; padding: 0 20px; }
   .prop {
-    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
-    margin: 14px 0; overflow: hidden;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-lg);
+    margin: 14px 0; overflow: hidden; box-shadow: var(--shadow-sm);
   }
   .prop-head { padding: 14px 18px 10px; }
-  .prop-name { font-size: 20px; font-weight: 700; }
+  .prop-name {
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    font-size: 20px; font-weight: 700;
+  }
+  .prop-name .badge { margin-left: 10px; vertical-align: 3px; }
   .prop-sub { color: var(--muted); font-size: 15px; margin-top: 2px; }
   .rows { border-top: 1px solid var(--line); }
   .row {
-    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-    padding: 11px 18px; border-top: 1px solid var(--line);
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 18px; border-top: 1px solid var(--line);
+    cursor: pointer;
   }
   .row:first-child { border-top: none; }
-  .d { font-weight: 700; min-width: 118px; font-variant-numeric: tabular-nums; }
+  .row:hover { background: color-mix(in srgb, var(--chip-bg) 45%, var(--card)); }
+  .d {
+    font-weight: 700; min-width: 112px; flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
   .badge, .chip {
-    font-size: 13.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
-    white-space: nowrap;
+    font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+    white-space: nowrap; flex-shrink: 0;
   }
   .chip { background: var(--chip-bg); color: var(--chip-ink); }
+  .chip.shrink { flex-shrink: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   .b-pass { background: var(--pass-bg); color: var(--pass-ink); }
   .b-warn { background: var(--warn-bg); color: var(--warn-ink); }
   .b-fail { background: var(--fail-bg); color: var(--fail-ink); }
   .b-rev  { background: var(--warn-bg); color: var(--warn-ink); }
-  .b-over { background: #c62828; color: #fff; }
-  .prop-name .badge { margin-left: 10px; vertical-align: 3px; }
-  .serial { color: var(--muted); font-size: 13.5px; margin-left: auto; }
+  .b-over { background: var(--over); color: #fff; }
   .open {
-    font-size: 15px; font-weight: 700; text-decoration: none;
-    color: #fff; background: var(--accent); border-radius: 9px; padding: 7px 14px;
-    margin-left: auto;
+    font-family: "Archivo", sans-serif; font-size: 14px; font-weight: 700;
+    text-decoration: none; color: var(--brand-black);
+    background: var(--gold); border-radius: var(--radius); padding: 7px 12px;
+    margin-left: auto; flex-shrink: 0;
   }
-  .serial ~ .open { margin-left: 12px; }
+  .open:hover { background: var(--gold-hover); }
   .open.none { background: var(--chip-bg); color: var(--muted); pointer-events: none; }
   .drive {
-    font-size: 14px; font-weight: 700; text-decoration: none;
-    color: var(--accent); background: var(--card);
-    border: 1.5px solid var(--line); border-radius: 9px; padding: 6px 12px;
+    font-family: "Archivo", sans-serif; font-size: 14px; font-weight: 700;
+    text-decoration: none; color: var(--ink-2); background: var(--card);
+    border: 1.5px solid var(--line); border-radius: var(--radius); padding: 6px 11px;
+    flex-shrink: 0;
   }
+  .drive:hover { border-color: var(--ink-2); }
+  .caret {
+    flex-shrink: 0; color: var(--muted); font-size: 13px;
+    transition: transform .15s ease; width: 14px; text-align: center;
+  }
+  .row[aria-expanded="true"] .caret { transform: rotate(90deg); }
+  .details {
+    padding: 4px 18px 16px; border-top: 1px dashed var(--line);
+    background: color-mix(in srgb, var(--chip-bg) 30%, var(--card));
+  }
+  .facts {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px 18px; padding-top: 12px;
+  }
+  .fact-label {
+    font-family: "Archivo", sans-serif; font-size: 11.5px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  }
+  .fact-value { font-size: 15px; color: var(--ink); margin-top: 1px; overflow-wrap: anywhere; }
+  .note { margin-top: 12px; border-radius: var(--radius); padding: 10px 14px; font-size: 15px; }
+  .note .fact-label { margin-bottom: 3px; }
+  .note.warn { background: var(--warn-bg); } .note.warn .fact-label { color: var(--warn-ink); }
+  .note.fail { background: var(--fail-bg); } .note.fail .fact-label { color: var(--fail-ink); }
+  .note.plain { background: var(--chip-bg); }
+  .note ul { margin: 2px 0 0; padding-left: 20px; }
   .empty { text-align: center; color: var(--muted); padding: 70px 20px; font-size: 18px; }
   footer { text-align: center; color: var(--muted); font-size: 13px; padding: 20px; }
-  @media (max-width: 560px) {
-    .serial { display: none; }
-    .d { min-width: 104px; }
-    .row .open { margin-left: auto; }
+  @media (max-width: 760px) {
+    .row { flex-wrap: wrap; }
+    .d { min-width: 100px; }
+    .head-inner img { height: 38px; }
   }
 </style>
 </head>
 <body>
 <header>
   <div class="head-inner">
-    <div class="wordmark"><span class="bolt">⚡</span> TONER ELECTRIC</div>
-    <div class="head-sub">Fire Alarm Inspection Records</div>
+    <img class="logo-light" src="/logo.png" alt="Toner Electric Company">
+    <img class="logo-dark" src="/logo-dark.png" alt="Toner Electric Company">
+    <div class="head-title">Fire Alarm Inspection Records
+      <small>Private records portal · Newport County, RI</small>
+    </div>
   </div>
 </header>
 
@@ -340,14 +408,18 @@ function propCard(p, rows) {
 
 function inspRow(i) {
   const row = el("div", "row");
+  row.setAttribute("role", "button");
+  row.setAttribute("tabindex", "0");
+  row.setAttribute("aria-expanded", "false");
+  row.title = "Click for details";
   row.appendChild(el("div", "d", fmtDate(i.date)));
-  if (i.building) row.appendChild(el("span", "chip", i.building));
+  if (i.building) row.appendChild(el("span", "chip shrink", i.building));
   row.appendChild(el("span", "chip", typeLabel(i)));
   const o = outcomeBadge(i.outcome);
   if (o) row.appendChild(o);
   if (i.needs_review) {
     const r = el("span", "badge b-rev", "⚠ review");
-    if (i.review_reason) r.title = i.review_reason;
+    r.title = "Click for what needs confirming";
     row.appendChild(r);
   }
   if (i.is_current && i.next_due) {
@@ -357,12 +429,11 @@ function inspRow(i) {
       b.title = `Next ${typeLabel(i).toLowerCase()} was due ${fmtDate(i.next_due)}`;
       row.appendChild(b);
     } else {
-      const c = el("span", "chip", `Next due ${fmtDate(i.next_due)}`);
-      c.title = "Based on the inspection type's interval";
+      const c = el("span", "chip", `Due ${fmtDate(i.next_due)}`);
+      c.title = "Next inspection due, based on this type's interval";
       row.appendChild(c);
     }
   }
-  if (i.marshal_serial) row.appendChild(el("span", "serial", "Serial " + i.marshal_serial));
   const a = el("a", "open" + (i.has_pdf ? "" : " none"), i.has_pdf ? "Open PDF" : "No PDF");
   if (i.has_pdf) { a.href = "/api/pdf/" + i.id; a.target = "_blank"; a.rel = "noopener"; }
   row.appendChild(a);
@@ -373,7 +444,71 @@ function inspRow(i) {
     g.title = "Show in Google Drive";
     row.appendChild(g);
   }
+  row.appendChild(el("span", "caret", "▶"));
+
+  let panel = null;
+  const toggle = () => {
+    if (!panel) {
+      panel = detailsPanel(i);
+      panel.style.display = "none";
+      row.insertAdjacentElement("afterend", panel);
+    }
+    const open = panel.style.display !== "none";
+    panel.style.display = open ? "none" : "";
+    row.setAttribute("aria-expanded", String(!open));
+  };
+  row.addEventListener("click", (e) => {
+    if (e.target.closest("a")) return;
+    toggle();
+  });
+  row.addEventListener("keydown", (e) => {
+    if ((e.key === "Enter" || e.key === " ") && e.target === row) { e.preventDefault(); toggle(); }
+  });
   return row;
+}
+
+function detailsPanel(i) {
+  const d = el("div", "details");
+
+  const facts = el("div", "facts");
+  const addFact = (label, value) => {
+    if (!value) return;
+    const f = el("div", "fact");
+    f.appendChild(el("div", "fact-label", label));
+    f.appendChild(el("div", "fact-value", value));
+    facts.appendChild(f);
+  };
+  addFact("Marshal serial #", i.marshal_serial);
+  addFact("Master box", i.master_box);
+  addFact("Panel", i.panel);
+  if (i.is_current && i.next_due) addFact("Next inspection due", fmtDate(i.next_due));
+  addFact("Original scan", i.source_file && `${i.source_file}${i.source_pages ? " · p. " + i.source_pages : ""}`);
+  if (facts.children.length) d.appendChild(facts);
+
+  if (i.needs_review && i.review_reason) {
+    const n = el("div", "note warn");
+    n.appendChild(el("div", "fact-label", "Needs confirmation"));
+    const ul = el("ul");
+    for (const r of i.review_reason.split("; "))
+      ul.appendChild(el("li", "", r.replace(/_/g, " ")));
+    n.appendChild(ul);
+    d.appendChild(n);
+  }
+
+  if (i.outcome === "fail") {
+    const n = el("div", "note fail");
+    n.appendChild(el("div", "fact-label", "Repairs needed"));
+    n.appendChild(el("div", "", i.remarks || "The report is marked needs-repairs; open the PDF for the inspector's repair list."));
+    d.appendChild(n);
+  } else if (i.remarks) {
+    const n = el("div", "note plain");
+    n.appendChild(el("div", "fact-label", "Inspector remarks"));
+    n.appendChild(el("div", "", i.remarks));
+    d.appendChild(n);
+  }
+
+  if (!d.children.length) d.appendChild(el("div", "fact-value", "No extra details for this record — everything is on the PDF."));
+  return d;
 }
 
 function typeLabel(i) {
