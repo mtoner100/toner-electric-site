@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fire Alarm Records</title>
+<style>
+  :root {
+    --bg: #f2f4f6;
+    --card: #ffffff;
+    --ink: #17222c;
+    --muted: #5b6b78;
+    --line: #dde3e8;
+    --brand: #141c24;
+    --brand-ink: #f5d33f;
+    --accent: #0b64c4;
+    --pass-bg: #e2f3e6; --pass-ink: #1a6b2f;
+    --warn-bg: #fdf0d7; --warn-ink: #8a5b00;
+    --fail-bg: #fbe3e1; --fail-ink: #a22219;
+    --chip-bg: #eef1f4; --chip-ink: #44525e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #10161c; --card: #19222b; --ink: #e8edf1; --muted: #93a3b1;
+      --line: #2a3640; --brand: #0c1217; --accent: #5aa5e8;
+      --pass-bg: #15301c; --pass-ink: #7bd694;
+      --warn-bg: #352a10; --warn-ink: #ecc064;
+      --fail-bg: #3a1a17; --fail-ink: #f09a92;
+      --chip-bg: #232e38; --chip-ink: #aebbc7;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 17px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    background: var(--brand); color: #fff; padding: 18px 20px;
+  }
+  .head-inner { max-width: 980px; margin: 0 auto; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .wordmark { font-weight: 800; letter-spacing: .12em; font-size: 20px; }
+  .wordmark .bolt { color: var(--brand-ink); }
+  .head-sub { color: #c7d2dc; font-size: 15px; }
+  .controls {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+    padding: 14px 20px 12px;
+  }
+  .controls-inner { max-width: 980px; margin: 0 auto; }
+  #q {
+    width: 100%; font-size: 20px; padding: 13px 16px;
+    border: 2px solid var(--line); border-radius: 12px;
+    background: var(--card); color: var(--ink); outline: none;
+  }
+  #q:focus { border-color: var(--accent); }
+  .filters { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+  .filters select {
+    font-size: 15px; padding: 7px 10px; border-radius: 9px;
+    border: 1.5px solid var(--line); background: var(--card); color: var(--ink);
+  }
+  .filters label.check {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 15px;
+    color: var(--muted); padding: 6px 4px; cursor: pointer; user-select: none;
+  }
+  #clear {
+    font-size: 14px; border: none; background: none; color: var(--accent);
+    cursor: pointer; padding: 6px 4px; display: none;
+  }
+  .counts { max-width: 980px; margin: 14px auto 0; padding: 0 20px; color: var(--muted); font-size: 15px; }
+  main { max-width: 980px; margin: 10px auto 60px; padding: 0 20px; }
+  .prop {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    margin: 14px 0; overflow: hidden;
+  }
+  .prop-head { padding: 14px 18px 10px; }
+  .prop-name { font-size: 20px; font-weight: 700; }
+  .prop-sub { color: var(--muted); font-size: 15px; margin-top: 2px; }
+  .rows { border-top: 1px solid var(--line); }
+  .row {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 11px 18px; border-top: 1px solid var(--line);
+  }
+  .row:first-child { border-top: none; }
+  .d { font-weight: 700; min-width: 118px; font-variant-numeric: tabular-nums; }
+  .badge, .chip {
+    font-size: 13.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
+    white-space: nowrap;
+  }
+  .chip { background: var(--chip-bg); color: var(--chip-ink); }
+  .b-pass { background: var(--pass-bg); color: var(--pass-ink); }
+  .b-warn { background: var(--warn-bg); color: var(--warn-ink); }
+  .b-fail { background: var(--fail-bg); color: var(--fail-ink); }
+  .b-rev  { background: var(--warn-bg); color: var(--warn-ink); }
+  .serial { color: var(--muted); font-size: 13.5px; margin-left: auto; }
+  .open {
+    font-size: 15px; font-weight: 700; text-decoration: none;
+    color: #fff; background: var(--accent); border-radius: 9px; padding: 7px 14px;
+  }
+  .open.none { background: var(--chip-bg); color: var(--muted); pointer-events: none; }
+  .empty { text-align: center; color: var(--muted); padding: 70px 20px; font-size: 18px; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; padding: 20px; }
+  @media (max-width: 560px) {
+    .serial { display: none; }
+    .d { min-width: 104px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="head-inner">
+    <div class="wordmark"><span class="bolt">⚡</span> TONER ELECTRIC</div>
+    <div class="head-sub">Fire Alarm Inspection Records</div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="controls-inner">
+    <input id="q" type="search" placeholder="Search address, property, town, or serial #…" autocomplete="off" autofocus>
+    <div class="filters">
+      <select id="f-town"><option value="">All towns</option></select>
+      <select id="f-year"><option value="">All years</option></select>
+      <select id="f-type">
+        <option value="">All types</option>
+        <option value="quarterly">Quarterly</option>
+        <option value="semi_annual">Semi-annual</option>
+        <option value="pretest">Pretest</option>
+        <option value="acceptance">Acceptance test</option>
+      </select>
+      <select id="f-outcome">
+        <option value="">Any outcome</option>
+        <option value="pass">Pass</option>
+        <option value="corrected">Problems corrected</option>
+        <option value="fail">Needs repairs</option>
+      </select>
+      <label class="check"><input id="f-review" type="checkbox"> Needs review</label>
+      <button id="clear">Clear all</button>
+    </div>
+  </div>
+</div>
+
+<div class="counts" id="counts">Loading records…</div>
+<main id="results"></main>
+<footer>Private records portal · Toner Electric Company · Middletown, RI</footer>
+
+<script>
+let MODEL = { properties: [], byProp: new Map() };
+
+const $ = (id) => document.getElementById(id);
+const els = {
+  q: $("q"), town: $("f-town"), year: $("f-year"), type: $("f-type"),
+  outcome: $("f-outcome"), review: $("f-review"), clear: $("clear"),
+  counts: $("counts"), results: $("results"),
+};
+
+init();
+
+async function init() {
+  let data;
+  try {
+    const res = await fetch("/api/index");
+    if (!res.ok) throw new Error(res.status);
+    data = await res.json();
+  } catch (e) {
+    els.counts.textContent = "Could not load records. Refresh to try again.";
+    return;
+  }
+  const byProp = new Map();
+  for (const p of data.properties) {
+    let aliases = [];
+    try { aliases = JSON.parse(p.aliases || "[]"); } catch {}
+    byProp.set(p.id, { ...p, aliasText: aliases.join(" ").toLowerCase(), inspections: [] });
+  }
+  for (const i of data.inspections) {
+    const p = byProp.get(i.property_id);
+    if (p) p.inspections.push(i);
+  }
+  MODEL = { properties: [...byProp.values()], byProp, meta: data.meta || {} };
+
+  fillSelect(els.town, distinct(MODEL.properties.map((p) => p.town)));
+  const years = distinct(
+    data.inspections.map((i) => (i.date || "").slice(0, 4)).filter(Boolean)
+  ).sort().reverse();
+  fillSelect(els.year, years);
+
+  for (const el of [els.town, els.year, els.type, els.outcome, els.review])
+    el.addEventListener("change", render);
+  els.q.addEventListener("input", render);
+  els.clear.addEventListener("click", () => {
+    els.q.value = ""; els.town.value = ""; els.year.value = "";
+    els.type.value = ""; els.outcome.value = ""; els.review.checked = false;
+    render(); els.q.focus();
+  });
+  render();
+}
+
+function distinct(arr) {
+  return [...new Set(arr.filter(Boolean))].sort();
+}
+
+function fillSelect(sel, values) {
+  for (const v of values) {
+    const o = document.createElement("option");
+    o.value = v; o.textContent = v;
+    sel.appendChild(o);
+  }
+}
+
+function norm(s) {
+  return (s || "").toLowerCase().replace(/[.,#']/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function render() {
+  const q = norm(els.q.value);
+  const town = els.town.value, year = els.year.value,
+        type = els.type.value, outcome = els.outcome.value,
+        reviewOnly = els.review.checked;
+  const filtering = q || town || year || type || outcome || reviewOnly;
+  els.clear.style.display = filtering ? "inline" : "none";
+
+  let shownProps = 0, shownInsp = 0;
+  const frag = document.createDocumentFragment();
+
+  for (const p of MODEL.properties) {
+    if (town && p.town !== town) continue;
+    const hay = norm(
+      [p.display_name, p.address, p.town, p.aliasText].join(" ")
+    );
+    const serialHit = q && p.inspections.some((i) => (i.marshal_serial || "").includes(els.q.value.trim()));
+    if (q && !hay.includes(q) && !serialHit) continue;
+
+    const rows = p.inspections.filter((i) => {
+      if (year && (i.date || "").slice(0, 4) !== year) return false;
+      if (type && i.inspection_type !== type) return false;
+      if (outcome && i.outcome !== outcome) return false;
+      if (reviewOnly && !i.needs_review) return false;
+      return true;
+    });
+    if (!rows.length) continue;
+
+    shownProps++; shownInsp += rows.length;
+    frag.appendChild(propCard(p, rows));
+  }
+
+  els.results.replaceChildren(frag);
+  if (!shownProps) {
+    const d = document.createElement("div");
+    d.className = "empty";
+    d.textContent = filtering
+      ? "No records match. Try fewer filters or a shorter search."
+      : "No records loaded yet.";
+    els.results.appendChild(d);
+  }
+  const totalInsp = MODEL.properties.reduce((n, p) => n + p.inspections.length, 0);
+  els.counts.textContent = filtering
+    ? `Showing ${shownInsp} inspection${shownInsp === 1 ? "" : "s"} at ${shownProps} propert${shownProps === 1 ? "y" : "ies"}`
+    : `${totalInsp} inspections · ${MODEL.properties.length} properties on file`;
+}
+
+function propCard(p, rows) {
+  const card = el("div", "prop");
+  const head = el("div", "prop-head");
+  const name = p.display_name || p.address;
+  head.appendChild(el("div", "prop-name", name));
+  const subBits = [];
+  if (p.display_name) subBits.push(p.address);
+  if (p.town) subBits.push(p.town);
+  head.appendChild(el("div", "prop-sub", subBits.join(" · ") || "—"));
+  card.appendChild(head);
+
+  const list = el("div", "rows");
+  for (const i of rows) list.appendChild(inspRow(i));
+  card.appendChild(list);
+  return card;
+}
+
+function inspRow(i) {
+  const row = el("div", "row");
+  row.appendChild(el("div", "d", fmtDate(i.date)));
+  if (i.building) row.appendChild(el("span", "chip", i.building));
+  row.appendChild(el("span", "chip", typeLabel(i)));
+  const o = outcomeBadge(i.outcome);
+  if (o) row.appendChild(o);
+  if (i.needs_review) {
+    const r = el("span", "badge b-rev", "⚠ review");
+    if (i.review_reason) r.title = i.review_reason;
+    row.appendChild(r);
+  }
+  if (i.marshal_serial) row.appendChild(el("span", "serial", "Serial " + i.marshal_serial));
+  const a = el("a", "open" + (i.has_pdf ? "" : " none"), i.has_pdf ? "Open PDF" : "No PDF");
+  if (i.has_pdf) { a.href = "/api/pdf/" + i.id; a.target = "_blank"; a.rel = "noopener"; }
+  row.appendChild(a);
+  return row;
+}
+
+function typeLabel(i) {
+  switch (i.inspection_type) {
+    case "quarterly": return i.quarter ? `Quarterly · Q${i.quarter}` : "Quarterly";
+    case "semi_annual": return "Semi-annual";
+    case "pretest": return "Pretest";
+    case "acceptance": return "Acceptance";
+    case "contract": return "Contract";
+    default: return "Inspection";
+  }
+}
+
+function outcomeBadge(o) {
+  if (o === "pass") return el("span", "badge b-pass", "PASS");
+  if (o === "corrected") return el("span", "badge b-warn", "CORRECTED");
+  if (o === "fail") return el("span", "badge b-fail", "NEEDS REPAIRS");
+  return null;
+}
+
+function fmtDate(d) {
+  if (!d) return "No date";
+  const [y, m, day] = d.split("-").map(Number);
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  if (!y || !m || !day) return d;
+  return `${months[m - 1]} ${day}, ${y}`;
+}
+
+function el(tag, cls, text) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (text != null) n.textContent = text;
+  return n;
+}
+</script>
+</body>
+</html>

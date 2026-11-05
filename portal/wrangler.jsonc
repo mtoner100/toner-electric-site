@@ -1,0 +1,39 @@
+// Toner Electric — private fire-alarm records portal.
+// Deployed to records.tonerelectric.com behind Cloudflare Access.
+// Local dev: npx wrangler dev -c portal/wrangler.jsonc --port 8787
+{
+  "name": "toner-records",
+  "account_id": "1046cc62fbcaa427d63405a4ebcf118d",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "assets": {
+    "directory": "public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "toner-records",
+      // Local dev ignores this id and uses .wrangler/state.
+      "database_id": "6da3d3cd-3b1d-42ee-9f99-dc80f9e98e92"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "PDFS",
+      "bucket_name": "toner-records-pdfs"
+    }
+  ],
+  "routes": [
+    { "pattern": "records.tonerelectric.com", "custom_domain": true }
+  ],
+  "vars": {
+    // Set at deploy time: e.g. "tonerelectric.cloudflareaccess.com" and the
+    // Access application AUD tag. Empty values fail closed in production.
+    "ACCESS_TEAM_DOMAIN": "tonerelectric.cloudflareaccess.com",
+    "ACCESS_AUD": "2f109335404bf8be069c6695c27a7ed3a7c52e68621bd3d621a1970c8928ed91",
+    "DEV_BYPASS_AUTH": "false"
+  }
+}

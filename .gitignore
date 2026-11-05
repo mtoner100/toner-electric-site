@@ -1,2 +1,10 @@
 node_modules/
 .env
+
+# Private customer data + records pipeline — repo is PUBLIC, never commit
+records/
+
+# Wrangler local state + dev vars
+portal/.wrangler/
+portal/.dev.vars
+.wrangler/
