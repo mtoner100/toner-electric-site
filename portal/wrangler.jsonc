@@ -32,6 +32,8 @@
   "vars": {
     // Set at deploy time: e.g. "tonerelectric.cloudflareaccess.com" and the
     // Access application AUD tag. Empty values fail closed in production.
+    // Who can assign inspections and approve submitted forms.
+    "ADMIN_EMAILS": "frank@tonerelectric.com,matt.toner8@gmail.com",
     "ACCESS_TEAM_DOMAIN": "tonerelectric.cloudflareaccess.com",
     "ACCESS_AUD": "2f109335404bf8be069c6695c27a7ed3a7c52e68621bd3d621a1970c8928ed91",
     "DEV_BYPASS_AUTH": "false"

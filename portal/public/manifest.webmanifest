@@ -1,0 +1,13 @@
+{
+  "name": "Toner Electric Inspections",
+  "short_name": "Inspections",
+  "start_url": "/inspect",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5F6F8",
+  "theme_color": "#101216",
+  "icons": [
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-180.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
