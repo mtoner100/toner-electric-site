@@ -68,6 +68,17 @@
     display: block; font-family: "Barlow", sans-serif; font-weight: 500;
     font-size: 13.5px; color: var(--muted); letter-spacing: .02em;
   }
+  .head-link {
+    margin-left: auto; font-family: "Barlow", sans-serif;
+    font-weight: 600; font-size: 14.5px; color: var(--link);
+    text-decoration: none; white-space: nowrap;
+  }
+  .head-link:hover { text-decoration: underline; }
+  .assign-link {
+    display: inline-block; margin-top: 12px; font-family: "Barlow", sans-serif;
+    font-weight: 600; font-size: 14.5px; color: var(--link); text-decoration: none;
+  }
+  .assign-link:hover { text-decoration: underline; }
   .controls {
     position: sticky; top: 0; z-index: 5;
     background: var(--bg); border-bottom: 1px solid var(--line);
@@ -189,6 +200,7 @@
     <div class="head-title">Fire Alarm Inspection Records
       <small>Private records portal · Newport County, RI</small>
     </div>
+    <a class="head-link" href="/inspect">Inspections ↗</a>
   </div>
 </header>
 
@@ -232,10 +244,17 @@ const els = {
   clear: $("clear"), counts: $("counts"), results: $("results"),
 };
 let TODAY = "";
+const AS = new URLSearchParams(location.search).get("as");
+let IS_ADMIN = false;
 
 init();
 
 async function init() {
+  // Admins get a "Schedule" shortcut inside current-cycle rows.
+  fetch("/api/inspect/me" + (AS ? "?as=" + encodeURIComponent(AS) : ""))
+    .then((r) => (r.ok ? r.json() : null))
+    .then((j) => { IS_ADMIN = !!(j && j.admin); })
+    .catch(() => {});
   let data;
   try {
     const res = await fetch("/api/index");
@@ -505,6 +524,18 @@ function detailsPanel(i) {
     n.appendChild(el("div", "fact-label", "Inspector remarks"));
     n.appendChild(el("div", "", i.remarks));
     d.appendChild(n);
+  }
+
+  if (IS_ADMIN && i.is_current && i.next_due) {
+    const a = el("a", "assign-link",
+      (i.overdue ? "Schedule the overdue inspection" : "Schedule the next inspection") + " →");
+    a.href = "/inspect?pid=" + i.property_id
+      + "&bldg=" + encodeURIComponent(i.building || "")
+      + "&type=" + encodeURIComponent(i.inspection_type)
+      + (i.quarter ? "&q=" + i.quarter : "")
+      + "&due=" + i.next_due + "&last=" + i.date
+      + (AS ? "&as=" + encodeURIComponent(AS) : "");
+    d.appendChild(a);
   }
 
   if (!d.children.length) d.appendChild(el("div", "fact-value", "No extra details for this record — everything is on the PDF."));

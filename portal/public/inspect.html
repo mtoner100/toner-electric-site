@@ -155,6 +155,8 @@
   .fact-label { font-family: "Archivo", sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
   .fact-value { font-size: 15px; }
   .remarks-block { margin-top: 10px; background: var(--chip-bg); border-radius: var(--radius); padding: 10px 12px; font-size: 15px; }
+  .card.flash { outline: 3px solid var(--gold); }
+  .show-more { margin: 4px 0 0; }
   @media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -202,7 +204,21 @@ async function init() {
   ME = { email: BOARD.email, admin: BOARD.admin };
   $("who").textContent = ME.email + (ME.admin ? " · admin" : "");
   $("head-right").innerHTML = ME.admin ? '<a href="/">Records ↗</a>' : "";
-  renderList();
+  await renderList();
+
+  // Arriving from an archive row's "Schedule" link: prefill the form.
+  const sp = new URLSearchParams(location.search);
+  if (ME.admin && sp.get("pid")) {
+    await prefillAssign({
+      property_id: Number(sp.get("pid")),
+      building: sp.get("bldg") || "",
+      inspection_type: sp.get("type") || "quarterly",
+      quarter: sp.get("q") || null,
+      date: sp.get("last") || "",
+      next_due: sp.get("due") || "",
+    });
+    history.replaceState(null, "", "/inspect" + (AS ? "?as=" + encodeURIComponent(AS) : ""));
+  }
 }
 
 function toast(msg) {
@@ -239,6 +255,8 @@ async function renderList() {
     m.appendChild(h2("Review queue"));
     if (!BOARD.queue.length) m.appendChild(empty("Nothing waiting for review."));
     for (const q of BOARD.queue) m.appendChild(queueCard(q));
+
+    await renderOverdue(m);
 
     m.appendChild(h2("Open assignments"));
     const open = BOARD.assignments.filter((a) => a.status === "assigned");
@@ -352,6 +370,130 @@ function queueCard(q) {
   return c;
 }
 
+// ------------------------------------------------- overdue → one-tap assign
+// Same rules as the archive page: next_due = date + 3mo (quarterly) or
+// 6mo (semi-annual); only the latest dated record per property+building is
+// the current cycle, and only it can be overdue. Entries that already have
+// an open assignment are hidden — assigning one makes it disappear here.
+let INDEX = null;
+async function getIndex() {
+  if (!INDEX) {
+    const r = await fetch("/api/index" + (AS ? "?as=" + encodeURIComponent(AS) : ""));
+    if (!r.ok) throw new Error("index");
+    INDEX = await r.json();
+  }
+  return INDEX;
+}
+
+function addMonths(iso, m) {
+  let [y, mo, d] = iso.split("-").map(Number);
+  mo += m; y += Math.floor((mo - 1) / 12); mo = ((mo - 1) % 12) + 1;
+  const last = new Date(y, mo, 0).getDate();
+  if (d > last) d = last;
+  return `${y}-${String(mo).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+}
+function daysLate(iso) {
+  const utc = (s) => { const [y, m, d] = s.split("-").map(Number); return Date.UTC(y, m - 1, d); };
+  return Math.round((utc(todayIso()) - utc(iso)) / 86400000);
+}
+const bnorm = (s) => (s || "").trim().toLowerCase();
+
+function computeOverdue(idx) {
+  const INTERVAL = { quarterly: 3, semi_annual: 6 };
+  const today = todayIso();
+  const props = new Map(idx.properties.map((p) => [p.id, p]));
+  const latest = new Map();
+  for (const i of idx.inspections) {
+    if (!i.date) continue;
+    const k = i.property_id + "|" + bnorm(i.building);
+    const cur = latest.get(k);
+    if (!cur || i.date > cur.date) latest.set(k, i);
+  }
+  const out = [];
+  for (const i of latest.values()) {
+    const m = INTERVAL[i.inspection_type];
+    if (!m) continue;
+    const due = addMonths(i.date, m);
+    if (due >= today) continue;
+    const p = props.get(i.property_id);
+    if (p) out.push({ ...i, next_due: due, prop: p });
+  }
+  return out.sort((a, b) => (a.next_due < b.next_due ? -1 : 1));
+}
+
+async function renderOverdue(m) {
+  let idx;
+  try { idx = await getIndex(); } catch { return; }
+  const active = new Set(BOARD.assignments.map((a) => a.property_id + "|" + bnorm(a.building)));
+  const od = computeOverdue(idx).filter((i) => !active.has(i.property_id + "|" + bnorm(i.building)));
+  if (!od.length) return;
+
+  m.appendChild(h2(`Overdue — needs scheduling (${od.length})`));
+  const wrap = el("div");
+  m.appendChild(wrap);
+  let shown = 0;
+  const holder = el("div", "show-more");
+  const more = el("button", "btn btn-ghost", "");
+  const showNext = () => {
+    for (const i of od.slice(shown, shown + 5)) wrap.appendChild(overdueCard(i));
+    shown = Math.min(od.length, shown + 5);
+    more.textContent = `Show ${od.length - shown} more`;
+    if (shown >= od.length) holder.remove();
+  };
+  showNext();
+  if (shown < od.length) {
+    holder.appendChild(more);
+    m.appendChild(holder);
+    more.onclick = showNext;
+  }
+}
+
+const nextQ = (i) =>
+  i.inspection_type === "quarterly" && i.quarter ? (Number(i.quarter) % 4) + 1 : null;
+
+function overdueCard(i) {
+  const c = el("div", "card");
+  const row = el("div", "a-row");
+  row.appendChild(propBlock({ display_name: i.prop.display_name, address: i.prop.address, town: i.prop.town }));
+  if (i.building) row.appendChild(el("span", "chip", i.building));
+  row.appendChild(el("span", "chip", typeChip({ inspection_type: i.inspection_type, quarter: nextQ(i) })));
+  row.appendChild(el("span", "due late", `Was due ${fmtDate(i.next_due)} · ${daysLate(i.next_due)} days`));
+  const right = el("div", "right");
+  const go = el("button", "btn btn-gold", "Assign →");
+  go.onclick = () => prefillAssign(i);
+  right.appendChild(go);
+  row.appendChild(right);
+  c.appendChild(row);
+  const lastBits = "Last inspection " + fmtDate(i.date) + (i.quarter ? ` (Q${i.quarter})` : "");
+  c.appendChild(el("div", "note-pre", lastBits));
+  return c;
+}
+
+// Fill the New assignment form from an archive record and jump to it;
+// dad only has to pick the tech. The quarter advances to the next one.
+async function prefillAssign(i) {
+  await ensureProps();
+  const label = LABEL_BY_ID.get(Number(i.property_id));
+  if (!label) { toast("Property not found"); return; }
+  $("na-prop").value = label;
+  $("na-bldg").value = i.building || "";
+  const sel = $("na-type");
+  if ([...sel.options].some((o) => o.value === i.inspection_type)) sel.value = i.inspection_type;
+  $("na-q").value = nextQ(i) ? String(nextQ(i)) : "";
+  const today = todayIso();
+  $("na-due").value = i.next_due ? (i.next_due < today ? today : i.next_due) : "";
+  $("na-notes").value = i.next_due && i.next_due < today
+    ? `Overdue — last done ${fmtDate(i.date)}, was due ${fmtDate(i.next_due)}`
+    : "";
+  const card = $("na-prop").closest(".card");
+  card.classList.add("flash");
+  setTimeout(() => card.classList.remove("flash"), 1800);
+  setTimeout(() => {
+    card.scrollIntoView({ behavior: "smooth", block: "start" });
+    $("na-who").focus({ preventScroll: true });
+  }, 120);
+}
+
 function newAssignmentCard() {
   const c = el("div", "card");
   c.innerHTML = `
@@ -375,7 +517,8 @@ function newAssignmentCard() {
       <div><label class="f">Due date</label><input id="na-due" type="date"></div>
     </div>
     <label class="f">Assign to (email)</label>
-    <input id="na-who" type="email" placeholder="technician@email.com" autocomplete="off">
+    <input id="na-who" type="email" list="na-who-list" placeholder="technician@email.com" autocomplete="off">
+    <datalist id="na-who-list"></datalist>
     <label class="f">Notes for the tech (optional)</label>
     <input id="na-notes" type="text" placeholder="Gate code, contact, parking…">
     <div style="margin-top:16px"><button class="btn btn-dark" id="na-go">Assign inspection</button></div>
@@ -398,23 +541,34 @@ function newAssignmentCard() {
       notes: c.querySelector("#na-notes").value.trim() || null,
     };
     if (!payload.assigned_to) { toast("Who is this assigned to?"); return; }
-    await post("assign", payload, "Assigned");
+    if (await post("assign", payload, "Assigned")) rememberTech(payload.assigned_to);
   };
   return c;
 }
 
 let PROP_INDEX = new Map();
+let LABEL_BY_ID = new Map();
+let PROPS_P = null;
+function ensureProps() {
+  return (PROPS_P ||= api("properties")
+    .then((r) => (r.ok ? r.json() : null))
+    .then((j) => {
+      if (!j) { PROPS_P = null; return; }
+      PROPS = j;
+      PROP_INDEX = new Map();
+      LABEL_BY_ID = new Map();
+      for (const p of PROPS.properties) {
+        const label = `${p.display_name || p.address}${p.display_name ? " — " + p.address : ""} (#${p.id})`;
+        PROP_INDEX.set(label, p.id);
+        LABEL_BY_ID.set(p.id, label);
+      }
+    }));
+}
 async function loadProps(card) {
-  if (!PROPS) {
-    const r = await api("properties");
-    if (!r.ok) return;
-    PROPS = await r.json();
-  }
+  await ensureProps();
+  if (!PROPS) return;
   const dl = card.querySelector("#na-prop-list");
-  PROP_INDEX = new Map();
-  for (const p of PROPS.properties) {
-    const label = `${p.display_name || p.address}${p.display_name ? " — " + p.address : ""} (#${p.id})`;
-    PROP_INDEX.set(label, p.id);
+  for (const label of PROP_INDEX.keys()) {
     const o = document.createElement("option");
     o.value = label;
     dl.appendChild(o);
@@ -428,6 +582,21 @@ async function loadProps(card) {
     o.value = b.building;
     bl.appendChild(o);
   }
+  const wl = card.querySelector("#na-who-list");
+  const emails = new Set();
+  try { for (const e of JSON.parse(localStorage.getItem("toner-techs") || "[]")) emails.add(e); } catch {}
+  for (const a of (BOARD && BOARD.assignments) || []) if (a.assigned_to) emails.add(a.assigned_to);
+  for (const e of emails) {
+    const o = document.createElement("option");
+    o.value = e;
+    wl.appendChild(o);
+  }
+}
+function rememberTech(email) {
+  try {
+    const list = [email, ...JSON.parse(localStorage.getItem("toner-techs") || "[]").filter((e) => e !== email)];
+    localStorage.setItem("toner-techs", JSON.stringify(list.slice(0, 8)));
+  } catch {}
 }
 function parseProp(v) {
   if (PROP_INDEX.has(v)) return PROP_INDEX.get(v);
@@ -444,6 +613,7 @@ async function post(path, payload, okMsg) {
   const body = await r.json().catch(() => ({}));
   if (!r.ok || body.error) { toast(body.error || "Something went wrong"); return false; }
   toast(okMsg);
+  if (path === "approve") INDEX = null; // the archive just gained a row
   renderList();
   window.scrollTo({ top: 0 });
   return true;
